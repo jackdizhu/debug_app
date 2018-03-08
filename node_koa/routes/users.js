@@ -38,7 +38,7 @@ router.get('/add', async (ctx, next) => {
     }
   })
   ctx.body = {
-    title: 'koa2 json',
+    title: 'add',
     user: user
   }
 })
@@ -46,7 +46,7 @@ router.get('/add', async (ctx, next) => {
 router.get('/find', async (ctx, next) => {
   let users = await userModel.find({name: 'jackdizhu'})
   ctx.body = {
-    title: 'koa2 json',
+    title: 'find',
     users: users
   }
 })
@@ -58,7 +58,7 @@ router.get('/edit', async (ctx, next) => {
   let R = await userModel.update(_user)
   let user = await userModel.findOne({name: 'jackdizhu'})
   ctx.body = {
-    title: 'koa2 json',
+    title: 'edit',
     user: user
   }
 })
@@ -74,7 +74,7 @@ router.get('/login', async (ctx, next) => {
     token = jwt.sign(userToken, secret, {expiresIn: '1h'})  //token签名 有效期为1小时
   }
   ctx.body = {
-    title: 'koa2 json',
+    title: 'login',
     user: user,
     token: token
   }
