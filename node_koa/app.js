@@ -28,9 +28,11 @@ global.log = log()
 onerror(app)
 
 // token 验证 js req header authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlci5uYW1lIiwiaWF0IjoxNTE2Nzg3MDU0LCJleHAiOjE1MTY3OTA2NTR9.gEIBKKqhEQ_slW0BmSK-3pnaXxYFaOSOJonLb3Xc6n0"
-// app.use(koaJwt({secret}).unless({
-//     // path: [/^\/api\/login/] //数组中的路径不需要通过jwt验证
-// }))
+app.use(koaJwt({secret, key: 'decodedToken', tokenKey: 'token', getToken: (ctx) => {
+  return ctx.query.token
+}}).unless({
+    path: [/^\/users\/login/, /^\/users\/add/] //数组中的路径不需要通过jwt验证
+}))
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text', 'multipart']

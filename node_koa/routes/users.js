@@ -81,28 +81,12 @@ router.get('/login', async (ctx, next) => {
 })
 // token
 router.get('/token', async (ctx, next) => {
-  const token = 'Bearer ' + (ctx.header.authorization || ctx.query.token || ctx.request.body.token || ctx.cookies.get('token') || '')
-  let payload
-  if (token) {
-    try {
-      // 解密，获取payload
-      payload = await verify(token.split(' ')[1], secret)
-    } catch (error) {
-      payload = 'err'
-    }
-    ctx.body = {
-      obj: {
-        token: payload,
-        _token: token
-      }
-    }
-  } else {
-    ctx.body = {
-      obj: {
-        message: 'token 错误',
-        code: -1,
-        _token: token
-      }
+  const decodedToken = ctx.state.decodedToken
+  const token = ctx.state.token
+  ctx.body = {
+    obj: {
+      token: token,
+      _token: decodedToken
     }
   }
 })
