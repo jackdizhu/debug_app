@@ -17,6 +17,10 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const api = require('./routes/api')
 
+// 自定义 日志打印
+const log = require('./com/log')
+global.log = log()
+
 // error handler
 onerror(app)
 

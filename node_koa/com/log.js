@@ -10,8 +10,10 @@ var logger = function (Obj) {
     });
 };
 
-var log = function (Obj) {
-    logger(Obj);
+var log = () => {
+    return function (Obj) {
+        logger(Obj);
+    }
 }
 
 module.exports = log;

@@ -25,6 +25,7 @@
     "koa-views": "^5.2.1",
     "mockjs": "^1.0.1-beta3",
     "nodemailer": "^4.4.2",
+    "mongoose": "4.7.6",
     "util": "^0.10.3"
   },
   "devDependencies": {
