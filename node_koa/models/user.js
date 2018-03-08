@@ -5,13 +5,14 @@ const config = require('../config')
 const dbHandel = require('../database/index')
 const UserModel = dbHandel.getModel('user')
 
-exports.insert = function ({name, password, nickName, headImg}) {
+exports.insert = function ({name, password, email, phone, ext}) {
   const user = new UserModel()
 
   user.name = name
   user.password = password
-  user.nick_name = nickName || 'nickName'
-  user.head_img = headImg || config.headImg
+  user.email = email
+  user.phone = phone
+  user.ext = ext
 
   return user.save()
 }
@@ -21,9 +22,10 @@ exports.update = function (user) {
     _id: user._id
   }, {
     $set: {
-      nick_name: user.nick_name,
-      head_img: user.head_img,
-      password: user.password
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      ext: user.ext
     }
   })
 }

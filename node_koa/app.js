@@ -4,13 +4,16 @@ const cors = require('koa-cors')
 const koaJwt = require('koa-jwt')
 const jwt = require('jsonwebtoken')
 const util = require('util')
-const verify = util.promisify(jwt.verify) // 解密
-const secret = 'lqwiuerpowjflaskdjffkhgoiwurpoqdjlsakjflsdkf' // 加盐 key
+// 解密
+const verify = util.promisify(jwt.verify)
+// 加盐 key
+const secret = 'lqwiuerpowjflaskdjffkhgoiwurpoqdjlsakjflsdkf'
 
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser') // form-data 不支持  x-www-form-urlencoded 改为
+// form-data 不支持  x-www-form-urlencoded 改为
+const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const index = require('./routes/index')
@@ -33,7 +36,8 @@ app.use(bodyparser({
   enableTypes:['json', 'form', 'text', 'multipart']
 }))
 app.use(json())
-app.use(cors()) // api 服务器 允许跨域
+// api 服务器 允许跨域
+app.use(cors())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 

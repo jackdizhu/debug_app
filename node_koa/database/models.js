@@ -9,11 +9,14 @@ module.exports = {
             type: String,
             required: true
         },
-        nick_name: {
+        email: {
             type: String
         },
-        head_img: {
+        phone: {
             type: String
+        },
+        ext: {
+            type: Object
         }
     }
 }
