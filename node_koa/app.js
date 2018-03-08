@@ -32,7 +32,8 @@ onerror(app)
 app.use(koaJwt({secret, key: 'decodedToken', tokenKey: 'token', getToken: (ctx) => {
   return (ctx.header.authorization || ctx.query.token || ctx.request.body.token || ctx.cookies.get('token') || '')
 }}).unless({
-    path: [/^\/users\/login/, /^\/users\/add/] //数组中的路径不需要通过jwt验证
+  // 数组中的路径不需要通过jwt验证
+  path: [/^\/users\/login/, /^\/users\/add/]
 }))
 // middlewares
 app.use(bodyparser({
