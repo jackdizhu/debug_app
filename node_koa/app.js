@@ -28,6 +28,7 @@ global.log = log()
 onerror(app)
 
 // token 验证 js req header authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlci5uYW1lIiwiaWF0IjoxNTE2Nzg3MDU0LCJleHAiOjE1MTY3OTA2NTR9.gEIBKKqhEQ_slW0BmSK-3pnaXxYFaOSOJonLb3Xc6n0"
+// decodedToken 解密后(数据)key tokenKey 原始(token)key
 app.use(koaJwt({secret, key: 'decodedToken', tokenKey: 'token', getToken: (ctx) => {
   return (ctx.header.authorization || ctx.query.token || ctx.request.body.token || ctx.cookies.get('token') || '')
 }}).unless({
