@@ -1,0 +1,425 @@
+@charset 'utf-8';
+
+*,*:before,*:after{
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box;
+}
+
+html{
+    line-height: 1.5;
+    font-size: 62.5%;
+    color: #657180;
+    // background: #f5f5f5;
+    word-break: break-all;
+}
+
+body, button, input, select, textarea{
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+table,
+td,
+th {
+    border-collapse: collapse;
+    border: none;
+}
+ul,
+ol {
+    list-style-type: none;
+}
+img[src=""]{
+    display: none;
+}
+button, input{
+  -webkit-appearance: none;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+}
+i{font-style: normal;}
+.floatL{
+    float:left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+ol,
+dl,
+dt,
+dd,
+li,
+body,
+form,
+input,
+button,
+img,
+area,
+cite,
+strong,
+em,
+table,
+td,
+th {
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1.4rem;
+}
+small{
+    font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-weight: 400;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: " ";
+  clear: both;
+}
+
+.ellipsis-3-lines {
+  -webkit-line-clamp: 3;
+}
+.ellipsis-2-lines, .ellipsis-3-lines {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.justify-around {
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+.justify-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.justify-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.justify-end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.justify-start {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.items-stretch {
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.items-baseline {
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+.items-center, .flex-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.items-end {
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+.items-start {
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.content-around {
+  -ms-flex-line-pack: distribute;
+  align-content: space-around;
+}
+.content-between {
+  -ms-flex-line-pack: justify;
+  align-content: space-between;
+}
+.content-center {
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+.content-end {
+  -ms-flex-line-pack: end;
+  align-content: flex-end;
+}
+.content-start {
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.displayFlex(){
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+// css3 循环动画
+.loading_animation(){
+  -webkit-overflow-scrolling: touch;
+  animation:loading 2s infinite linear;
+  -webkit-animation:loading 2s infinite linear;
+}
+// css3 循环动画
+.loadingOut_animation(){
+  -webkit-overflow-scrolling: touch;
+  animation:loading_out 2s 1 linear;
+  -webkit-animation:loading_out 2s 1 linear;
+}
+// 执行动画 一次 并保存最后一帧forwards
+.opacity_to_0_animation(){
+  -webkit-overflow-scrolling: touch;
+  animation:opacity_to_0 .4s 1 linear forwards;
+  -webkit-animation:opacity_to_0 .4s 1 linear forwards;
+}
+// css3 过渡
+.transition(){
+    transition: all .2s .4s;
+    -moz-transition: all .2s .4s;
+    -webkit-transition: all .2s .4s;
+    -o-transition: all .2s .4s;
+}
+.cube(){
+   -webkit-transform: translateZ(0);
+   -moz-transform: translateZ(0);
+   -ms-transform: translateZ(0);
+   -o-transform: translateZ(0);
+   transform: translateZ(0);
+   /* Other transform properties here */
+}
+// border_box
+.border_box(){
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+// 设置文字小于12px 解决方案
+.font_size(@b){
+    font-size: .6px;
+    transform: scale(@b/12);
+    -ms-transform: scale(@b/12);
+    -moz-transform: scale(@b/12);
+    -webkit-transform: scale(@b/12);
+    -o-transform: scale(@b/12);
+}
+//  设置 input 提示文字颜色
+.placeholder(@a){
+      &::-webkit-input-placeholder {
+            color: @a;
+      }
+      &:-webkit-input-placeholder {
+            color: @a;
+      }
+      &:-moz-placeholder {
+            color: @a;
+      }
+      &::-moz-placeholder {
+            color: @a;
+      }
+      &:-ms-input-placeholder {
+            color: @a;
+      }
+}
+
+/* html5 动画库 */
+/*页面左边淡入*/
+.anLeftTo{
+    -webkit-animation:fadeInLeftBig 1s .2s ease both;
+    -moz-animation:fadeInLeftBig 1s .2s ease both;}
+    @-webkit-keyframes fadeInLeftBig{
+    0%{opacity:0;
+    -webkit-transform:translateX(-200rem)}
+    100%{opacity:1;
+    -webkit-transform:translateX(0)}
+    }
+    @-moz-keyframes fadeInLeftBig{
+    0%{opacity:0;
+    -moz-transform:translateX(-200rem)}
+    100%{opacity:1;
+    -moz-transform:translateX(0)}
+}
+/*页面右边淡入*/
+.anRightTo{
+    -webkit-animation:fadeInRightBig 1s .2s ease both;
+    -moz-animation:fadeInRightBig 1s .2s ease both;}
+    @-webkit-keyframes fadeInRightBig{
+    0%{opacity:0;
+    -webkit-transform:translateX(200rem)}
+    100%{opacity:1;
+    -webkit-transform:translateX(0)}
+    }
+    @-moz-keyframes fadeInRightBig{
+    0%{opacity:0;
+    -moz-transform:translateX(200rem)}
+    100%{opacity:1;
+    -moz-transform:translateX(0)}
+}
+/*页面顶部淡入*/
+.anTopTo{
+    -webkit-animation:fadeInDownBig 1s .2s ease both;
+    -moz-animation:fadeInDownBig 1s .2s ease both;}
+    @-webkit-keyframes fadeInDownBig{
+    0%{opacity:0;
+    -webkit-transform:translateY(-200rem)}
+    100%{opacity:1;
+    -webkit-transform:translateY(0)}
+    }
+    @-moz-keyframes fadeInDownBig{
+    0%{opacity:0;
+    -moz-transform:translateY(-200rem)}
+    100%{opacity:1;
+    -moz-transform:translateY(0)}
+}
+/*页面底部淡入*/
+.anBottomTo{
+    -webkit-animation:fadeInUpBig 1s .2s ease both;
+    -moz-animation:fadeInUpBig 1s .2s ease both;}
+    @-webkit-keyframes fadeInUpBig{
+    0%{opacity:0;
+    -webkit-transform:translateY(200rem)}
+    100%{opacity:1;
+    -webkit-transform:translateY(0)}
+    }
+    @-moz-keyframes fadeInUpBig{
+    0%{opacity:0;
+    -moz-transform:translateY(200rem)}
+    100%{opacity:1;
+    -moz-transform:translateY(0)}
+}
+/*页面左边弹入*/
+.anBounceLeftTo{
+    -webkit-animation:bounceInLeft 1s .2s ease both;
+    -moz-animation:bounceInLeft 1s .2s ease both;}
+    @-webkit-keyframes bounceInLeft{
+    0%{opacity:0;
+    -webkit-transform:translateX(-200rem)}
+    60%{opacity:1;
+    -webkit-transform:translateX(3rem)}
+    80%{-webkit-transform:translateX(-1rem)}
+    100%{-webkit-transform:translateX(0)}
+    }
+    @-moz-keyframes bounceInLeft{
+    0%{opacity:0;
+    -moz-transform:translateX(-200rem)}
+    60%{opacity:1;
+    -moz-transform:translateX(3rem)}
+    80%{-moz-transform:translateX(-1rem)}
+    100%{-moz-transform:translateX(0)}
+}
+/*页面右边弹入*/
+.anBounceRightTo{
+    -webkit-animation:bounceInRight 1s .2s ease both;
+    -moz-animation:bounceInRight 1s .2s ease both;}
+    @-webkit-keyframes bounceInRight{
+    0%{opacity:0;
+    -webkit-transform:translateX(200rem)}
+    60%{opacity:1;
+    -webkit-transform:translateX(-3rem)}
+    80%{-webkit-transform:translateX(1rem)}
+    100%{-webkit-transform:translateX(0)}
+    }
+    @-moz-keyframes bounceInRight{
+    0%{opacity:0;
+    -moz-transform:translateX(200rem)}
+    60%{opacity:1;
+    -moz-transform:translateX(-3rem)}
+    80%{-moz-transform:translateX(1rem)}
+    100%{-moz-transform:translateX(0)}
+}
+/*页面顶部弹入*/
+.anBounceTopTo{
+    -webkit-animation:bounceInDown 1s .2s ease both;
+    -moz-animation:bounceInDown 1s .2s ease both;}
+    @-webkit-keyframes bounceInDown{
+    0%{opacity:0;
+    -webkit-transform:translateY(-200rem)}
+    60%{opacity:1;
+    -webkit-transform:translateY(3rem)}
+    80%{-webkit-transform:translateY(-1rem)}
+    100%{-webkit-transform:translateY(0)}
+    }
+    @-moz-keyframes bounceInDown{
+    0%{opacity:0;
+    -moz-transform:translateY(-200rem)}
+    60%{opacity:1;
+    -moz-transform:translateY(3rem)}
+    80%{-moz-transform:translateY(-1rem)}
+    100%{-moz-transform:translateY(0)}
+}
+/*页面底部弹入*/
+.anBounceBottomTo{
+    -webkit-animation:bounceInUp 1s .2s ease both;
+    -moz-animation:bounceInUp 1s .2s ease both;}
+    @-webkit-keyframes bounceInUp{
+    0%{opacity:0;
+    -webkit-transform:translateY(200rem)}
+    60%{opacity:1;
+    -webkit-transform:translateY(-3rem)}
+    80%{-webkit-transform:translateY(1rem)}
+    100%{-webkit-transform:translateY(0)}
+    }
+    @-moz-keyframes bounceInUp{
+    0%{opacity:0;
+    -moz-transform:translateY(200rem)}
+    60%{opacity:1;
+    -moz-transform:translateY(-3rem)}
+    80%{-moz-transform:translateY(1rem)}
+    100%{-moz-transform:translateY(0)}
+}
