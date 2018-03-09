@@ -6,6 +6,9 @@ module.exports = {
     "browser": true,
     "mocha": true
   },
+  "globals": {
+    "log": true
+  },
   "plugins": [
     "html"
   ],

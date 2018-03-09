@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const util = require('util')
 const sendMail = require('../com/sendMail')
 // 自定义 日志打印
-const log = require('./com/log')()
+// const log = require('./com/log')()
 // 解密
 const verify = util.promisify(jwt.verify)
 // 加盐 key

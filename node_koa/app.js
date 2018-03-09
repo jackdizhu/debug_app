@@ -22,7 +22,7 @@ const users_v1 = require('./routes/users_v1')
 const api = require('./routes/api')
 
 // 自定义 日志打印
-const log = require('./com/log')()
+const log = require('./com/log')
 global.log = log()
 
 // error handler
