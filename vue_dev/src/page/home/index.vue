@@ -2,50 +2,38 @@
   <div id="app">
     <div class="layout">
       <Layout :style="{minHeight: '100vh'}">
-        <Content class="flex items-center content-center justify-center">
-          <Card style="width:320px">
-            <Tabs type="card">
-              <TabPane label="登录">
-                <Form ref="formLogin" :model="formLogin" :rules="ruleLogin" :label-width="80">
-                  <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formLogin.name"></Input>
-                  </FormItem>
-                  <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formLogin.passwd"></Input>
-                  </FormItem>
-                  <FormItem>
-                    <Button type="primary" @click="handleSubmit('formLogin')">确定</Button>
-                    <Button type="ghost" @click="handleReset('formLogin')" style="margin-left: 8px">重置</Button>
-                  </FormItem>
-                </Form>
-              </TabPane>
-              <TabPane label="注册">
-                <Form ref="formRegister" :model="formRegister" :rules="ruleRegister" :label-width="80">
-                  <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formRegister.name"></Input>
-                  </FormItem>
-                  <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formRegister.passwd"></Input>
-                  </FormItem>
-                  <FormItem label="确认密码" prop="passwdCheck">
-                    <Input type="password" v-model="formRegister.passwdCheck"></Input>
-                  </FormItem>
-                  <FormItem>
-                    <Button type="primary" @click="handleSubmit('formRegister')">确定</Button>
-                    <Button type="ghost" @click="handleReset('formRegister')" style="margin-left: 8px">重置</Button>
-                  </FormItem>
-                </Form>
-              </TabPane>
-            </Tabs>
-
-          </Card>
-        </Content>
+        <Header :style="{padding: 0}" class="layout-header-bar Header-con">
+          <!-- <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0'}" type="navicon-round" size="24"></Icon> -->
+          <h2>
+            debug_app
+          </h2>
+        </Header>
+        <Layout>
+            <Sider ref="sideMenu" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed" class="sideMenu">
+              <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
+                <Submenu :name="`${key + 1 + ''}`" v-for="(item, key) in menu.home" :key="key">
+                  <template slot="title">
+                    <Icon type="ios-keypad"></Icon>
+                    {{item.name}}
+                  </template>
+                  <MenuItem :name="`1-${I + 1}`" v-for="(li, I) in item.child" :key="I">{{li.name}}</MenuItem>
+                </Submenu>
+              </Menu>
+            </Sider>
+            <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">Content</Content>
+        </Layout>
+        <Footer class="Footer-con">
+          <h5>
+            debug_app koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
+          </h5>
+        </Footer>
       </Layout>
     </div>
   </div>
 </template>
 
 <script>
+import menu from '@/com/menu'
 import {
   Layout,
   Row,
@@ -56,66 +44,18 @@ import {
   Button,
   Tabs,
   TabPane,
+  Menu,
+  Submenu,
+  MenuItem,
+  Icon,
   Form
 } from 'iview'
 export default {
   name: 'index',
   data () {
-    const validateName = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户名.'))
-      } else {
-        callback()
-      }
-    }
-    const validatePass = (rule, value, callback) => {
-      console.log(this.formRegister)
-
-      if (value === '') {
-        callback(new Error('请输入密码.'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassCheck = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入确认密码.'))
-      } else if (value !== this.formLogin.passwd) {
-        callback(new Error('两次输入的密码不一致.'))
-      } else {
-        callback()
-      }
-    }
-
     return {
-        formLogin: {
-        name: '',
-        passwd: ''
-      },
-      ruleLogin: {
-        name: [
-          { validator: validateName, trigger: 'blur' }
-        ],
-        passwd: [
-          { validator: validatePass, trigger: 'blur' }
-        ]
-      },
-      formRegister: {
-        name: '',
-        passwd: '',
-        passwdCheck: ''
-      },
-      ruleRegister: {
-        name: [
-          { validator: validateName, trigger: 'blur' }
-        ],
-        passwd: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
-        passwdCheck: [
-          { validator: validatePassCheck, trigger: 'blur' }
-        ]
-      }
+      menu,
+      isCollapsed: false
     }
   },
   // 父组件数据
@@ -124,58 +64,26 @@ export default {
   components: {
   },
   // 计算
-  computed: {},
+  computed: {
+    rotateIcon () {
+      return [
+        'menu-icon',
+        this.isCollapsed ? 'rotate-icon' : ''
+      ]
+    },
+    menuitemClasses () {
+      return [
+        'menu-item',
+        this.isCollapsed ? 'collapsed-menu' : ''
+      ]
+    }
+  },
   // 数据监听
   watch: {},
   // 事件方法
   methods: {
-    getRegister (name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$request({
-            url: this.$api.register,
-            type: 'POST',
-            params: this.formRegister
-          }).then(res => {
-            if (res.res_code === '0') {
-              this.$Message.success('注册成功!')
-              console.log(res, 'this.$api.mock')
-            }
-          })
-        } else {
-          this.$Message.error('信息校验失败.')
-        }
-      })
-    },
-    getLogin (name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$request({
-            url: this.$api.login,
-            type: 'POST',
-            params: this.formLogin
-          }).then(res => {
-            if (res.res_code === '0') {
-              this.$Message.success('登录成功!')
-              console.log(res, 'this.$api.mock')
-            } else {
-              this.$Message.error('登录失败.')
-            }
-          })
-        } else {
-          this.$Message.error('信息校验失败.')
-        }
-      })
-    },
-    handleSubmit (name) {
-      if (name === 'formRegister') {
-        this.getRegister(name)
-      } else {
-        this.getLogin(name)
-      }
-    },
-    handleReset (name) {
-      this.$refs[name].resetFields();
+    collapsedSider () {
+      this.$refs.sideMenu.toggleCollapse()
     }
   },
   // el 和 data 并未初始化
@@ -199,11 +107,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .layout-con{
-    height: 100%;
-    width: 100%;
+  .Header-con{
+    color: #fff;
+    background-color: #1c2438;
+    text-align: center;
   }
-  .Row-con{
-    height: 100%;
+  .Footer-con{
+    text-align: center;
   }
 </style>

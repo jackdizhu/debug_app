@@ -156,6 +156,8 @@ export default {
             if (res.res_code === '0') {
               this.$Message.success('登录成功!')
               console.log(res, 'this.$api.mock')
+
+              this.$router.push('/home')
             } else {
               this.$Message.error('登录失败.')
             }
