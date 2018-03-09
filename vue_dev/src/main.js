@@ -7,7 +7,9 @@ import router from './router'
 import { request } from './com/http.js'
 import Api from './com/api.js'
 import IView from 'iview'
-import 'iview/dist/styles/iview.css'
+// import 'iview/dist/styles/iview.css'
+// 主题
+import '@/them/index.less'
 
 import '@/less/com.less'
 // import config from './com/config.js'

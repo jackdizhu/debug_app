@@ -107,9 +107,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import '~@/them/com.less';
+
   .Header-con{
     color: #fff;
-    background-color: #1c2438;
+    background-color: @title-color;
     text-align: center;
   }
   .Footer-con{
