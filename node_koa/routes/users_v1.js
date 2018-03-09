@@ -29,6 +29,8 @@ router.post('/register', async (ctx, next) => {
     _initUser.password = passwd
     user = await userModel.insert(_initUser)
     if (user) {
+      // 密码 不放回
+      user.password = undefined
       res_code = '0'
       msg = '注册成功.'
     } else {
