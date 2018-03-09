@@ -43,7 +43,7 @@ function post (url, data = {}) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       }
-  }).then(res => {
+    }).then(res => {
       resolve(res)
     }, err => {
       reject(err)
@@ -58,10 +58,10 @@ function post (url, data = {}) {
  * @param obj {  url, params, type }
  * @returns {Promise}
  */
-function request(obj) {
+function request (obj) {
   let { url, params, type } = obj
   return new Promise((resolve, reject) => {
-    let fn;
+    let fn = null
     if (type === 'POST') {
       fn = post
     } else {

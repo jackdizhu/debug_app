@@ -34,22 +34,22 @@
 
 <script>
 import menu from '@/com/menu'
-import {
-  Layout,
-  Row,
-  Content,
-  Card,
-  FormItem,
-  Input,
-  Button,
-  Tabs,
-  TabPane,
-  Menu,
-  Submenu,
-  MenuItem,
-  Icon,
-  Form
-} from 'iview'
+// import {
+//   Layout,
+//   Row,
+//   Content,
+//   Card,
+//   FormItem,
+//   Input,
+//   Button,
+//   Tabs,
+//   TabPane,
+//   Menu,
+//   Submenu,
+//   MenuItem,
+//   Icon,
+//   Form
+// } from 'iview'
 export default {
   name: 'index',
   data () {

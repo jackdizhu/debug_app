@@ -46,18 +46,18 @@
 </template>
 
 <script>
-import {
-  Layout,
-  Row,
-  Content,
-  Card,
-  FormItem,
-  Input,
-  Button,
-  Tabs,
-  TabPane,
-  Form
-} from 'iview'
+// import {
+//   Layout,
+//   Row,
+//   Content,
+//   Card,
+//   FormItem,
+//   Input,
+//   Button,
+//   Tabs,
+//   TabPane,
+//   Form
+// } from 'iview'
 export default {
   name: 'index',
   data () {
@@ -175,7 +175,7 @@ export default {
       }
     },
     handleReset (name) {
-      this.$refs[name].resetFields();
+      this.$refs[name].resetFields()
     }
   },
   // el 和 data 并未初始化

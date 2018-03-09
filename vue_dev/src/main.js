@@ -22,9 +22,13 @@ Vue.use(IView)
 Vue.prototype.$request = request
 Vue.prototype.$api = Api
 
-new Vue({
+let _vm = new Vue({
   el: '#app',
   router,
   template: '<App/>',
   components: { App }
+})
+// 处理 语法检测
+Vue.use({
+  _vm
 })
