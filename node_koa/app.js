@@ -17,7 +17,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+const users_v1 = require('./routes/users_v1')
 const api = require('./routes/api')
 
 // 自定义 日志打印
@@ -29,12 +29,12 @@ onerror(app)
 
 // token 验证 js req header authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlci5uYW1lIiwiaWF0IjoxNTE2Nzg3MDU0LCJleHAiOjE1MTY3OTA2NTR9.gEIBKKqhEQ_slW0BmSK-3pnaXxYFaOSOJonLb3Xc6n0"
 // decodedToken 解密后(数据)key tokenKey 原始(token)key
-app.use(koaJwt({secret, key: 'decodedToken', tokenKey: 'token', getToken: (ctx) => {
-  return (ctx.header.authorization || ctx.query.token || ctx.request.body.token || ctx.cookies.get('token') || '')
-}}).unless({
-  // 数组中的路径不需要通过jwt验证
-  path: [/^\/users\/login/, /^\/users\/add/]
-}))
+// app.use(koaJwt({secret, key: 'decodedToken', tokenKey: 'token', getToken: (ctx) => {
+//   return (ctx.header.authorization || ctx.query.token || ctx.request.body.token || ctx.cookies.get('token') || '')
+// }}).unless({
+//   // 数组中的路径不需要通过jwt验证
+//   path: [/\// ,/^\/users_v[0-9]\/login/, /^\/users_v[0-9]\/register/]
+// }))
 // middlewares
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text', 'multipart']
@@ -67,7 +67,7 @@ app.use(async (ctx, next) => {
     if (ctx.response.status !== 200) {
       ctx.body = {
         obj: {
-          code: '0',
+          res_code: '0',
           msg: 'ok'
         }
       }
@@ -84,8 +84,12 @@ app.use(async (ctx, next) => {
   }
 })
 
+// app.use(async (ctx, next) => {
+//   await next()
+// })
+
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(users_v1.routes(), users_v1.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
 
 // error-handling

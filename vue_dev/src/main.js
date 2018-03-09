@@ -6,18 +6,20 @@ import Router from 'vue-router'
 import router from './router'
 import { request } from './com/http.js'
 import Api from './com/api.js'
+import IView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 import '@/less/com.less'
 // import config from './com/config.js'
 
 // 使用 路由
 Vue.use(Router)
+Vue.use(IView)
 
 // Vue.config.productionTip = false
 Vue.prototype.$request = request
 Vue.prototype.$api = Api
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

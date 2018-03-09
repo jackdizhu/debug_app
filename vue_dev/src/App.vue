@@ -1,26 +1,22 @@
 <template>
   <div id="app">
-    <div class="img-box">
-      <img :src="logo" width="16px">
-    </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import logo from '@/assets/logo.png'
-
+// import { iButton } from 'iview'
 export default {
   name: 'app',
   data: () => {
     return {
-      logo: logo
     }
   },
   // 父组件数据
   props: [],
   // 组件
-  components: {},
+  components: {
+  },
   // 计算
   computed: {},
   // 数据监听
@@ -48,8 +44,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .img-box{
-    text-align: center;
-    padding: 1rem;
-  }
 </style>

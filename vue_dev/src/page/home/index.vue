@@ -60,8 +60,8 @@ import {
 } from 'iview'
 export default {
   name: 'index',
-  data: () => {
-    const validateName = (rule, value, callback) => {
+  data () {
+      const validateName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入用户名.'))
       } else {
@@ -69,6 +69,8 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
+      console.log(this.formRegister)
+
       if (value === '') {
         callback(new Error('请输入密码.'))
       } else {
@@ -84,8 +86,9 @@ export default {
         callback()
       }
     }
+
     return {
-      formLogin: {
+        formLogin: {
         name: '',
         passwd: ''
       },
