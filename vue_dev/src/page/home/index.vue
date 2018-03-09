@@ -61,7 +61,7 @@ import {
 export default {
   name: 'index',
   data () {
-      const validateName = (rule, value, callback) => {
+    const validateName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入用户名.'))
       } else {
