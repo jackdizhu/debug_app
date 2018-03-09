@@ -1,12 +1,13 @@
 'use strict'
 
-const config = require('../config')
+// const config = require('../config')
 
 const dbHandel = require('../database/index')
 const ProjectErrorInfoModel = dbHandel.getModel('projectErrorInfo')
+const ProjectModel = dbHandel.getModel('project')
 
 exports.insert = function ({projectId, date, msg, mapFile, code, ext}) {
-  const project = new ProjectModel()
+  const projectErrorInfo = new ProjectErrorInfoModel()
 
   projectErrorInfo.projectId = projectId
   projectErrorInfo.date = date

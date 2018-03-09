@@ -1,9 +1,9 @@
 const router = require('koa-router')()
 const userModel = require('../models/user')
-const util = require('util')
+// const util = require('util')
 const jwt = require('jsonwebtoken')
 // 解密
-const verify = util.promisify(jwt.verify)
+// const verify = util.promisify(jwt.verify)
 // 加盐 key
 const secret = 'lqwiuerpowjflaskdjffkhgoiwurpoqdjlsakjflsdkf'
 
@@ -20,7 +20,7 @@ router.get('/string', async (ctx, next) => {
 })
 
 router.get('/json', async (ctx, next) => {
-  let users = await userModel.find({name: 'jackdizhu'})
+  // let users = await userModel.find({name: 'jackdizhu'})
   ctx.body = {
     title: 'koa2 json'
   }
@@ -55,7 +55,8 @@ router.get('/edit', async (ctx, next) => {
   let _user = await userModel.findOne({name: 'jackdizhu'})
   _user._id = _user._id.toString()
   _user.password = 'password1'
-  let R = await userModel.update(_user)
+  // let R =
+  await userModel.update(_user)
   let user = await userModel.findOne({name: 'jackdizhu'})
   ctx.body = {
     title: 'edit',
@@ -69,9 +70,10 @@ router.get('/login', async (ctx, next) => {
   if (user) {
     // 登录成功
     let userToken = {
-        name: user.name
+      name: user.name
     }
-    token = jwt.sign(userToken, secret, {expiresIn: '1h'})  //token签名 有效期为1小时
+    // token签名 有效期为1小时
+    token = jwt.sign(userToken, secret, {expiresIn: '1h'})
   }
   ctx.body = {
     title: 'login',

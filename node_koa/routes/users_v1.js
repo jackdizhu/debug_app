@@ -1,9 +1,9 @@
 const router = require('koa-router')()
 const userModel = require('../models/user')
-const util = require('util')
+// const util = require('util')
 const jwt = require('jsonwebtoken')
 // 解密
-const verify = util.promisify(jwt.verify)
+// const verify = util.promisify(jwt.verify)
 // 加盐 key
 const secret = 'lqwiuerpowjflaskdjffkhgoiwurpoqdjlsakjflsdkf'
 
@@ -23,7 +23,10 @@ router.post('/register', async (ctx, next) => {
       nick_name: 'nick_name',
       head_img: 'head_img'
     }
-  }, user = {}
+  }
+  let user = {}
+  let res_code = '-1'
+  let msg = ''
   if (name && passwd) {
     _initUser.name = name
     _initUser.password = passwd
@@ -54,14 +57,17 @@ router.post('/login', async (ctx, next) => {
   let _post = ctx.request.body || {}
   let { name, passwd } = _post
 
-  let token = '', user = {} ,res_code = '-1' ,msg = ''
+  let token = ''
+  let user = {}
+  let res_code = '-1'
+  let msg = ''
   if (name && passwd) {
     user = await userModel.findOne({name: name, password: passwd})
     token = ''
     if (user) {
       // 登录成功
       let userToken = {
-          name: user.name
+        name: user.name
       }
       // token签名 有效期为1小时
       token = jwt.sign(userToken, secret, {expiresIn: '1h'})
@@ -97,7 +103,7 @@ router.get('/string', async (ctx, next) => {
 })
 
 router.get('/json', async (ctx, next) => {
-  let users = await userModel.find({name: 'jackdizhu'})
+  // let users = await userModel.find({name: 'jackdizhu'})
   ctx.body = {
     title: 'koa2 json'
   }
@@ -115,7 +121,8 @@ router.get('/edit', async (ctx, next) => {
   let _user = await userModel.findOne({name: 'jackdizhu'})
   _user._id = _user._id.toString()
   _user.password = 'password1'
-  let R = await userModel.update(_user)
+  // let R =
+  await userModel.update(_user)
   let user = await userModel.findOne({name: 'jackdizhu'})
   ctx.body = {
     title: 'edit',

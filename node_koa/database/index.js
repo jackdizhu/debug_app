@@ -1,5 +1,5 @@
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 
 const config = require('../config')
 
@@ -15,22 +15,21 @@ mongoose.connect(config.db, {
   }
 })
 
-var Schema = mongoose.Schema;
+var Schema = mongoose.Schema
 
+var models = require('./models')
 
-var models = require("./models");
-
-for(var m in models){
-    // Schema.index({ project: 1, create_at: -1 })
-    mongoose.model(m,new Schema(models[m]));
+for (var m in models) {
+  // Schema.index({ project: 1, create_at: -1 })
+  mongoose.model(m, new Schema(models[m]))
 }
 
 module.exports = {
-    getModel: function(type){
-        return _getModel(type);
-    }
-};
+  getModel: function (type) {
+    return _getModel(type)
+  }
+}
 
-var _getModel = function(type){
-    return mongoose.model(type);
-};
+var _getModel = function (type) {
+  return mongoose.model(type)
+}
