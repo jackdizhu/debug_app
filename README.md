@@ -1,7 +1,7 @@
 ## debug_app
 
 koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
-# v0.1.0
+# v0.2.0
 
 koa^2.2 + mongoose^4.7.6 + vue^2.5.2 + iview^2.10.0-rc.1 简单登录注册 采用 token 验证(可完全分离部署)
 
