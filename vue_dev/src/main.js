@@ -7,8 +7,10 @@ import router from './router'
 import store from './store'
 import { request } from './com/http.js'
 import Api from './com/api.js'
-import IView from 'iview'
+// import IView from 'iview'
 // import 'iview/dist/styles/iview.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 // 主题
 import '@/them/index.less'
 
@@ -17,7 +19,8 @@ import '@/less/com.less'
 
 // 使用 路由
 Vue.use(Router)
-Vue.use(IView)
+// Vue.use(IView)
+Vue.use(ElementUI)
 
 // Vue.config.productionTip = false
 Vue.prototype.$request = request

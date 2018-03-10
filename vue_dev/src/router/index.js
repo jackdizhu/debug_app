@@ -3,6 +3,8 @@ import Router from 'vue-router'
 
 import Page from '@/page/index'
 import Home from '@/page/home'
+import AddProject from '@/page/home/addProject'
+import ProjectList from '@/page/home/projectList'
 
 Vue.use(Router)
 
@@ -23,11 +25,16 @@ export default new Router({
       path: '/home',
       component: Home,
       children: [
-        // {
-        //   path: '/page/VModelTest',
-        //   name: 'VModelTest',
-        //   component: VModelTest
-        // }
+        {
+          path: '/home/addProject',
+          name: 'addProject',
+          component: AddProject
+        },
+        {
+          path: '/home/projectList',
+          name: 'projectList',
+          component: ProjectList
+        }
       ]
     }
   ]

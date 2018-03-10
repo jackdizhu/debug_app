@@ -26,47 +26,7 @@
 export default {
   name: 'index',
   data () {
-    const validateName = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户名.'))
-      } else {
-        callback()
-      }
-    }
-    const validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码.'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassCheck = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入确认密码.'))
-      } else if (value !== this.formRegister.passwd) {
-        callback(new Error('两次输入的密码不一致.'))
-      } else {
-        callback()
-      }
-    }
-
     return {
-      formRegister: {
-        name: '',
-        passwd: '',
-        passwdCheck: ''
-      },
-      ruleRegister: {
-        name: [
-          { validator: validateName, trigger: 'blur' }
-        ],
-        passwd: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
-        passwdCheck: [
-          { validator: validatePassCheck, trigger: 'blur' }
-        ]
-      }
     }
   },
   // 父组件数据
