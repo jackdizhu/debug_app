@@ -5,6 +5,15 @@ koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
 
 koa^2.2 + mongoose^4.7.6 + vue^2.5.2 + iview^2.10.0-rc.1 简单登录注册 采用 token 验证(可完全分离部署)
 
+# v0.2.0 iveiw
+
+MenuItem 组件 绑定on-selest事件
+需要(Submenu 有父级绑定父级组件 或者 MenuItem)绑定on-menu-item-selest事件
+
+# v0.2.0 element-ui
+
+el-form 组件 :label-width="80" 绑定值是'80px'字符串
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@
