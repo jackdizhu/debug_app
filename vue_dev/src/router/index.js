@@ -5,6 +5,7 @@ import Page from '@/page/index'
 import Home from '@/page/home'
 import AddProject from '@/page/home/addProject'
 import ProjectList from '@/page/home/projectList'
+import ProjectDetails from '@/page/home/projectList/projectDetails'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
           path: '/home/projectList',
           name: 'projectList',
           component: ProjectList
+        },
+        {
+          path: '/home/projectList/projectDetails',
+          name: 'projectDetails',
+          component: ProjectDetails
         }
       ]
     }

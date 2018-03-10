@@ -1,7 +1,15 @@
 <template>
   <div>
     <el-container>
-      add
+      <el-card class="box-card">
+        <div slot="header" class="bootclearfix box-card-header" @click="showProjectDetails">
+          <span>卡片名称</span>
+          <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit">编辑</el-button>
+        </div>
+        <div class="text item">
+          列表内容
+        </div>
+      </el-card>
     </el-container>
   </div>
 </template>
@@ -41,6 +49,12 @@ export default {
   watch: {},
   // 事件方法
   methods: {
+    showProjectDetails () {
+      this.$router.push('/home/projectList/projectDetails')
+    },
+    edit () {
+      console.log('edit')
+    }
   },
   // el 和 data 并未初始化
   beforeCreate () {
@@ -65,4 +79,19 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
+  .box-card-header {
+    cursor: pointer;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .box-card {
+    width: 480px;
+  }
 </style>

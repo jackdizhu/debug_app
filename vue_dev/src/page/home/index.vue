@@ -10,7 +10,7 @@
         <el-aside width="200px">
           <el-menu
             default-active="1-2"
-            class="el-menu-vertical-demo"
+            class="el-menu-left"
             @open="handleOpen"
             @close="handleClose">
             <el-submenu :index="`${key + 1 + ''}`" v-for="(item, key) in menu.home" :key="key">
@@ -121,6 +121,10 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
+  .el-menu-left {
+    text-align: left;
+  }
+
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
@@ -138,8 +142,6 @@ export default {
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
-    line-height: 160px;
   }
 
   body > .el-container {
