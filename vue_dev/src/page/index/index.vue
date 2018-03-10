@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 // import {
 //   Layout,
 //   Row,
@@ -127,6 +128,7 @@ export default {
   watch: {},
   // 事件方法
   methods: {
+    ...mapActions(['user_signin']),
     getRegister (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -156,6 +158,7 @@ export default {
             if (res.res_code === '0') {
               this.$Message.success('登录成功!')
               console.log(res, 'this.$api.mock')
+              this.user_signin(res)
 
               this.$router.push('/home')
             } else {

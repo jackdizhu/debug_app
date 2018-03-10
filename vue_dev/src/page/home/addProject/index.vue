@@ -20,9 +20,7 @@
                 </Submenu>
               </Menu>
             </Sider>
-            <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
-              <router-view/>
-            </Content>
+            <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">Content</Content>
         </Layout>
         <Footer class="Footer-con">
           <h5>
@@ -111,12 +109,4 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
-  .Header-con{
-    color: #fff;
-    background-color: @title-color;
-    text-align: center;
-  }
-  .Footer-con{
-    text-align: center;
-  }
 </style>

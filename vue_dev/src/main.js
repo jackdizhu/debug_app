@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import Router from 'vue-router'
 import router from './router'
+import store from './store'
 import { request } from './com/http.js'
 import Api from './com/api.js'
 import IView from 'iview'
@@ -25,6 +26,7 @@ Vue.prototype.$api = Api
 let _vm = new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

@@ -1,5 +1,5 @@
 module.exports = {
-  'port': 8000,
+  'port': 3000,
   'db': 'mongodb://localhost/nodeKoa',
   'jwt': {
     'key': 'user',
