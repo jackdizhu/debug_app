@@ -8,10 +8,10 @@
               <TabPane label="登录">
                 <Form ref="formLogin" :model="formLogin" :rules="ruleLogin" :label-width="80">
                   <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formLogin.name"></Input>
+                    <Input type="text" v-model="formLogin.name" />
                   </FormItem>
                   <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formLogin.passwd"></Input>
+                    <Input type="password" v-model="formLogin.passwd" />
                   </FormItem>
                   <FormItem>
                     <Button type="primary" @click="handleSubmit('formLogin')">确定</Button>
@@ -22,13 +22,13 @@
               <TabPane label="注册">
                 <Form ref="formRegister" :model="formRegister" :rules="ruleRegister" :label-width="80">
                   <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formRegister.name"></Input>
+                    <Input type="text" v-model="formRegister.name" />
                   </FormItem>
                   <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formRegister.passwd"></Input>
+                    <Input type="password" v-model="formRegister.passwd" />
                   </FormItem>
                   <FormItem label="确认密码" prop="passwdCheck">
-                    <Input type="password" v-model="formRegister.passwdCheck"></Input>
+                    <Input type="password" v-model="formRegister.passwdCheck" />
                   </FormItem>
                   <FormItem>
                     <Button type="primary" @click="handleSubmit('formRegister')">确定</Button>
