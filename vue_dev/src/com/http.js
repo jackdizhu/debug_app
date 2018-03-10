@@ -4,6 +4,8 @@ axios.defaults.timeout = 1000 * 60 * 60
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/mock/5a522f2eb9574d08787bf76a/app1'
 axios.defaults.baseURL = 'http://127.0.0.1:3000'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// token 验证
+axios.defaults.headers.post['authorization'] = sessionStorage.getItem('token') || ''
 // axios.defaults.withCredentials = true // 带cookie 请求
 axios.defaults.httpsAgent = new https.Agent({
   rejectUnauthorized: false
