@@ -30,6 +30,7 @@
     "mockjs": "^1.0.1-beta3",
     "mongoose": "4.7.6",
     "nodemailer": "^4.4.2",
+    "source-map": "^0.5.3",
     "util": "^0.10.3"
   },
   "devDependencies": {

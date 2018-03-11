@@ -56,6 +56,9 @@ module.exports = {
     },
     key: {
       type: String
+    },
+    ext: {
+      type: Object
     }
   },
   file: {
@@ -70,6 +73,9 @@ module.exports = {
     size: {
       type: String,
       required: true
+    },
+    ext: {
+      type: Object
     }
   },
   projectErrorInfo: {
@@ -84,11 +90,23 @@ module.exports = {
     msg: {
       type: String
     },
+    line: {
+      type: String
+    },
+    column: {
+      type: String
+    },
+    filename: {
+      type: String
+    },
     mapFile: {
       type: String
     },
     code: {
       type: String
+    },
+    ext: {
+      type: Object
     }
   }
 }

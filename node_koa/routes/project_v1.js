@@ -30,6 +30,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
     code: '',
     ext: {}
   }
+
   let user = {}
   let res_code = '-1'
   let resMsg = ''
@@ -58,8 +59,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
   ctx.body = {
     title: 'addProject',
     res_code: res_code,
-    msg: resMsg,
-    projectErrorInfo: projectErrorInfo
+    msg: resMsg
   }
 })
 // 添加记录
