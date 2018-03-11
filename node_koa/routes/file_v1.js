@@ -3,6 +3,7 @@ const fileModel = require('../models/file')
 // const util = require('util')
 const multer = require('koa-multer')
 const path = require('path')
+const fs = require('fs')
 
 router.prefix('/file_v1')
 
@@ -44,7 +45,7 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
   }
 })
 
-router.get('/upload2', async (ctx, next) => {
+router.get('/err', async (ctx, next) => {
   log(a)
   let token = ''
   let file = {}
@@ -57,6 +58,28 @@ router.get('/upload2', async (ctx, next) => {
     file: file,
     token: token
   }
+})
+
+router.get('/download', async function (ctx) {
+  let res_code = '-1'
+  let msg = '文件不存在'
+
+  var fileName = '测试1.jpg'
+  let _path = path.resolve(__dirname, '../data/' + fileName)
+  // 设置实体头（表示消息体的附加信息的头字段）,提示浏览器以文件下载的方式打开
+  var data = null
+  ctx.attachment(fileName)
+  try {
+    data = fs.readFileSync(_path)
+  } catch (error) {
+    ctx.attachment('download.json')
+    data = {
+      title: 'download',
+      res_code: res_code,
+      msg: msg
+    }
+  }
+  ctx.body = data
 })
 
 module.exports = router
