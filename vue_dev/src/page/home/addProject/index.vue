@@ -21,8 +21,8 @@
           </el-upload>
           <el-input type="text" v-model="formProject.mapFile" />
         </el-form-item>
-        <el-form-item label="mapURL" prop="mapFile">
-          <el-input type="text" v-model="formProject.mapFile" />
+        <el-form-item label="mapURL" prop="mapFileUrl">
+          <el-input type="text" v-model="formProject.mapFileUrl" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit('formProject')">确定</el-button>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 // import {
 //   Layout,
 //   Row,
@@ -64,19 +65,19 @@ export default {
     return {
       fileList: [],
       formProject: {
+        userId: '',
         name: '',
         msg: '',
-        mapFile: ''
+        mapFile: '',
+        mapFileUrl: ''
       },
       ruleProject: {
         name: [
           { validator: validateName, trigger: 'blur' }
         ],
         msg: [
-          { validator: validateName, trigger: 'blur' }
         ],
         mapFile: [
-          { validator: validateName, trigger: 'blur' }
         ]
       }
     }
@@ -88,6 +89,8 @@ export default {
   },
   // 计算
   computed: {
+    ...mapState(['user']),
+    ...mapGetters(['getUserId'])
   },
   // 数据监听
   watch: {},
@@ -97,25 +100,23 @@ export default {
       // this.fileList = fileList.slice(-3)
     },
     handleSubmit (name) {
+      this.formProject.userId = this.getUserId
       this.$refs[name].validate((valid) => {
         if (valid) {
-          // this.$request({
-          //   url: this.$api.login,
-          //   type: 'POST',
-          //   params: this.formLogin
-          // }).then(res => {
-          //   if (res.res_code === '0') {
-          //     this.$message.success('登录成功!')
-          //     console.log(res, 'this.$api.mock')
-          //     this.user_signin(res)
+          this.$request({
+            url: this.$api.addProject,
+            type: 'POST',
+            params: this.formProject
+          }).then(res => {
+            if (res.res_code === '0') {
+              this.$message.success('添加项目成功!')
+              console.log(res, 'this.$api.mock')
 
-          //     this.$router.push('/home')
-          //   } else {
-          //     this.$message.error('登录失败.')
-          //   }
-          // })
-          this.$message.success('handleSubmit!')
-          console.log('handleSubmit')
+              // this.$router.push('/home')
+            } else {
+              this.$message.error('添加项目失败.')
+            }
+          })
         } else {
           this.$message.error('信息校验失败.')
         }

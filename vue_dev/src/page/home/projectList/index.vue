@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-container>
-      <el-card class="box-card">
+      <el-card class="box-card" v-for="(item, key) in projectList" :key="key">
         <div slot="header" class="bootclearfix box-card-header" @click="showProjectDetails">
-          <span>卡片名称</span>
+          <span>{{item.name}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit">编辑</el-button>
         </div>
         <div class="text item">
-          列表内容
+          {{item.msg}}
         </div>
       </el-card>
     </el-container>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 // import {
 //   Layout,
 //   Row,
@@ -35,6 +36,7 @@ export default {
   name: 'index',
   data () {
     return {
+      projectList: []
     }
   },
   // 父组件数据
@@ -44,6 +46,8 @@ export default {
   },
   // 计算
   computed: {
+    ...mapState(['user']),
+    ...mapGetters(['getUserId'])
   },
   // 数据监听
   watch: {},
@@ -63,6 +67,20 @@ export default {
   },
   // 完成了 data 数据的初始化，el没有
   created () {
+    this.$request({
+      url: this.$api.projectList,
+      type: 'GET',
+      params: {
+        userId: this.getUserId
+      }
+    }).then(res => {
+      if (res.res_code === '0') {
+        this.projectList = res.project
+        console.log(res, 'this.$api.mock')
+      } else {
+        this.$message.error('查询项目列表失败.')
+      }
+    })
     console.log('created ------------------ 完成了 data 数据的初始化，el没有')
   },
   // 完成了 el 和 data 初始化

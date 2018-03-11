@@ -88,13 +88,12 @@ export default {
   // 事件方法
   methods: {
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
+      // console.log(key, keyPath)
     },
     linkTo (to) {
-      console.log(to)
       this.$router.push(to)
     }
   },

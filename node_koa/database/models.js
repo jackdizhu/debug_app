@@ -24,11 +24,17 @@ module.exports = {
       type: String,
       required: true
     },
-    msg: {
+    user_id: {
       type: String,
       required: true
     },
+    msg: {
+      type: String
+    },
     mapFile: {
+      type: String
+    },
+    mapFileUrl: {
       type: String
     },
     key: {
@@ -40,12 +46,13 @@ module.exports = {
       type: String,
       required: true
     },
-    path: {
+    nowName: {
       type: String,
       required: true
     },
-    nowName: {
-      type: String
+    size: {
+      type: String,
+      required: true
     }
   },
   projectErrorInfo: {

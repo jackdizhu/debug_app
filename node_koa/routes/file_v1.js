@@ -20,8 +20,7 @@ let storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 router.post('/upload', upload.single('file'), async (ctx, next) => {
-  const { originalname, path, mimetype } = ctx.req.file
-  log({ originalname, name, path, mimetype })
+  const { originalname, path, filename, mimetype, size } = ctx.req.file
 
   let _post = ctx.request.body || {}
 
@@ -32,8 +31,8 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
 
   file = await fileModel.insert({
     name: originalname,
-    path: path,
-    nowName: name
+    nowName: filename,
+    size: size
   })
 
   ctx.body = {

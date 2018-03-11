@@ -5,27 +5,14 @@
 const dbHandel = require('../database/index')
 const FileModel = dbHandel.getModel('file')
 
-exports.insert = function ({ name, path, nowName }) {
+exports.insert = function ({ name, size, nowName }) {
   const file = new FileModel()
 
   file.name = name
-  file.path = path
   file.nowName = nowName
+  file.size = size
 
   return file.save()
-}
-
-exports.update = function (file) {
-  return FileModel.update({
-    _id: file._id
-  }, {
-    $set: {
-      msg: file.msg,
-      mapFile: file.mapFile,
-      key: file.key,
-      ext: file.ext
-    }
-  })
 }
 
 exports.getByName = function (fileName) {
