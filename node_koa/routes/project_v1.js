@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 const projectModel = require('../models/project')
 // const util = require('util')
+const md5 = require("md5")
 
 router.prefix('/project_v1')
 
@@ -12,10 +13,17 @@ router.post('/addProject', async (ctx, next) => {
   let _initProject = {
     name: '',
     user_id: '',
+    date: (() => {
+      return new Date().getTime()
+    })(),
     msg: '',
     mapFile: '',
     mapFileUrl: '',
-    key: '',
+    key: (() => {
+      let _t = new Date().getTime() + userId
+      str = md5(_t)
+      return str
+    })(),
     ext: {}
   }
   let user = {}

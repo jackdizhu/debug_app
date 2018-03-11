@@ -5,10 +5,11 @@
 const dbHandel = require('../database/index')
 const ProjectModel = dbHandel.getModel('project')
 
-exports.insert = function ({ name, user_id, msg, mapFile, mapFileUrl, key, ext}) {
+exports.insert = function ({ name, date, user_id, msg, mapFile, mapFileUrl, key, ext}) {
   const project = new ProjectModel()
 
   project.name = name
+  project.date = date
   project.user_id = user_id
   project.msg = msg
   project.mapFile = mapFile

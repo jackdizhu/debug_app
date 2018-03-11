@@ -5,11 +5,12 @@
 const dbHandel = require('../database/index')
 const UserModel = dbHandel.getModel('user')
 
-exports.insert = function ({name, password, email, phone, ext}) {
+exports.insert = function ({ name, password, date, email, phone, ext}) {
   const user = new UserModel()
 
   user.name = name
   user.password = password
+  user.date = date
   user.email = email
   user.phone = phone
   user.ext = ext
