@@ -15,3 +15,5 @@ data () {}
 // data 定义 es6 箭头函数 会导致 读取 this 为 undefined 问题
 data: () => {}
 ```
+
+http://127.0.0.1:3000/project_v1/addProjectErrorInfo?key=e0f1e39c0ef40253b5b21d24f137f69b&line=321&column=9&filename=http://127.0.0.1/AlloyLever/public/dist/js/build.js
