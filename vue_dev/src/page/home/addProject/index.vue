@@ -8,6 +8,22 @@
         <el-form-item label="项目描述" prop="msg">
           <el-input type="textarea" v-model="formProject.msg" />
         </el-form-item>
+        <el-form-item label="map文件" prop="mapFile">
+          <el-upload
+            class="upload"
+            :action="$api.upload"
+            multiple
+            :limit="3"
+            :on-change="handleChange"
+            :file-list="fileList">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+          <el-input type="text" v-model="formProject.mapFile" />
+        </el-form-item>
+        <el-form-item label="mapURL" prop="mapFile">
+          <el-input type="text" v-model="formProject.mapFile" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit('formProject')">确定</el-button>
           <el-button type="ghost" @click="handleReset('formProject')" style="margin-left: 8px">重置</el-button>
@@ -46,15 +62,20 @@ export default {
     }
 
     return {
+      fileList: [],
       formProject: {
         name: '',
-        msg: ''
+        msg: '',
+        mapFile: ''
       },
       ruleProject: {
         name: [
           { validator: validateName, trigger: 'blur' }
         ],
         msg: [
+          { validator: validateName, trigger: 'blur' }
+        ],
+        mapFile: [
           { validator: validateName, trigger: 'blur' }
         ]
       }
@@ -72,6 +93,9 @@ export default {
   watch: {},
   // 事件方法
   methods: {
+    handleChange (file, fileList) {
+      // this.fileList = fileList.slice(-3)
+    },
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {

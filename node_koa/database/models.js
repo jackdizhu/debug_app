@@ -35,6 +35,19 @@ module.exports = {
       type: String
     }
   },
+  file: {
+    name: {
+      type: String,
+      required: true
+    },
+    path: {
+      type: String,
+      required: true
+    },
+    nowName: {
+      type: String
+    }
+  },
   projectErrorInfo: {
     projectId: {
       type: String,
