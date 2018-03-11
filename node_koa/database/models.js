@@ -39,6 +39,15 @@ module.exports = {
     msg: {
       type: String
     },
+    filename: {
+      type: String
+    },
+    line: {
+      type: Number
+    },
+    column: {
+      type: Number
+    },
     mapFile: {
       type: String
     },
@@ -73,8 +82,7 @@ module.exports = {
       required: true
     },
     msg: {
-      type: String,
-      required: true
+      type: String
     },
     mapFile: {
       type: String

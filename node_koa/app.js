@@ -65,7 +65,12 @@ app.use(koaJwt(
   }
 ).unless({
   // 数组中的路径不需要通过jwt验证
-  path: [/\//, /^\/users_v[0-9]\/login/, /^\/users_v[0-9]\/register/, /^\/file_v[0-9]\/[a-zA-Z]+/]
+  path: [
+    /\//, /^\/users_v[0-9]\/login/,
+    /^\/users_v[0-9]\/register/,
+    /^\/file_v[0-9]\/[a-zA-Z]+/,
+    /^\/project_v[0-9]\/addProjectErrorInfo/
+  ]
 }))
 // middlewares
 app.use(bodyparser({
