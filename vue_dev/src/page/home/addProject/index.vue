@@ -18,12 +18,12 @@
             :on-change="handleChange"
             :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
-            <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
           </el-upload>
         </el-form-item>
-        <el-form-item label="mapURL" prop="mapFileUrl">
+        <!-- mapFileUrl 功能后面做 -->
+        <!-- <el-form-item label="mapURL" prop="mapFileUrl">
           <el-input type="text" v-model="formProject.mapFileUrl" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="handleSubmit('formProject')">确定</el-button>
           <el-button type="ghost" @click="handleReset('formProject')" style="margin-left: 8px">重置</el-button>
