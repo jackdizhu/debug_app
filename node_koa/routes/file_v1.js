@@ -3,7 +3,9 @@ const fileModel = require('../models/file')
 const userModel = require('../models/user')
 // const util = require('util')
 const multer = require('koa-multer')
-const path = require('path')
+const Path = require('path')
+// 写入文件时, 如果上级文件夹不存在, 则会自动创建这个文件夹
+var filendir = require('filendir')
 const fs = require('fs')
 
 router.prefix('/file_v1')
@@ -12,7 +14,7 @@ router.prefix('/file_v1')
 let storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, '../data/temp'))
+    cb(null, Path.resolve(__dirname, '../data/temp'))
   },
   filename: function (req, file, cb) {
     let fileFormat = (file.originalname).split(".")
@@ -21,14 +23,18 @@ let storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 router.post('/upload', upload.single('file'), async (ctx, next) => {
+  const { originalname, path, filename, mimetype, size } = ctx.req.file
+
   let uName = ctx.state.decodedToken.name
   let _user = await userModel.findOne({name: uName})
 
   if (_user) {
-    log(ctx.req.file)
+    // 移动文件 重新命名
+    setTimeout(() => {
+      filendir.writeFileSync(Path.resolve(__dirname, '../data/' + _user._id + '/' + originalname), fs.readFileSync(path))
+      fs.unlinkSync(path)
+    }, 0)
   }
-
-  const { originalname, path, filename, mimetype, size } = ctx.req.file
 
   let _post = ctx.request.body || {}
 
@@ -71,7 +77,7 @@ router.get('/download', async function (ctx) {
   let msg = '文件不存在'
 
   var fileName = '测试1.jpg'
-  let _path = path.resolve(__dirname, '../data/' + fileName)
+  let _path = Path.resolve(__dirname, '../data/' + fileName)
   // 设置实体头（表示消息体的附加信息的头字段）,提示浏览器以文件下载的方式打开
   var data = null
   ctx.attachment(fileName)
