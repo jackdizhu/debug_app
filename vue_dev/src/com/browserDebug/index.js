@@ -1,8 +1,8 @@
 export default (_config, window) => {
 
-  (function () {
-    "use strict";
+    var console = window.console = window.console || {}
 
+    let key = ''
     // 采集浏览器指纹
     var _Fingerprint2 = {}
     var Fingerprint2 = require('fingerprintjs2')
@@ -11,10 +11,18 @@ export default (_config, window) => {
       _Fingerprint2.user_agent = components.find(item => {
         return item.key === 'user_agent'
       })
+      console.log(_Fingerprint2)
     })
 
-    var console = window.console = window.console || {};
-
+    const postMsg = (msg) => {
+      let data = {
+        errMsg: msg,
+        _Fingerprint2: _Fingerprint2,
+        key: key
+      }
+      let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
+      new Image().src = src
+    }
     console.readConfig = function (config) {
       var index, level;
 
@@ -61,8 +69,7 @@ export default (_config, window) => {
       console.config.logJavaScriptErrors = String.prototype.trim.call(console.config.logJavaScriptErrors) !== "false";
 
       return console;
-    };
-
+    }
     console.addStackTrace = function (data, error) {
       var stackTrace;
       if (data) {
@@ -79,8 +86,7 @@ export default (_config, window) => {
         }
       }
       return data;
-    };
-
+    }
     console.createProxyConsoleFunction = function (level, originalOrDefaultFunction) {
       return function () {
         var argumentsArray, returns, data, index = 0;
@@ -105,8 +111,7 @@ export default (_config, window) => {
         }
         return returns;
       };
-    };
-
+    }
     console.proxyConsoleFunctions = function () {
       var index, level, originalOrDefaultFunction;
 
@@ -134,8 +139,7 @@ export default (_config, window) => {
       }
 
       return console;
-    };
-
+    }
     console.handleJavaScriptErrorsLogging = function () {
       if (console.config.logJavaScriptErrors) {
         if (window.onerror && window.onerror !== console.onError) {
@@ -156,25 +160,21 @@ export default (_config, window) => {
         }
       }
       return console;
-    };
-
+    }
     console.send = function (data) {
       // levelEnabledOnServer 该配置 错误等级 提交
       if (data.level === console.config.levelEnabledOnServer) {
-        let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
-        new Image().src = src
+        postMsg(data.message)
       }
       return console;
-    };
-
+    }
     console.init = function (config) {
       return console
         .restore()
         .readConfig(config)
         .proxyConsoleFunctions()
         .handleJavaScriptErrorsLogging();
-    };
-
+    }
     console.restore = function () {
       var index, functionName;
 
@@ -201,27 +201,18 @@ export default (_config, window) => {
       delete console.config;
 
       return console;
-    };
-
-  }());
-
-  console.init({
-    // levels: ["info", "warn", "error"],
-    levelEnabledOnServer: 'error',
-    // levelForConsoleLog: 'info',
-    serverUrl: '/logs'
-  });
-
-  var uncaught = require('uncaught')
-  uncaught.start()
-  uncaught.addListener(function (error) {
-    // console.log(error.stack, '\n ---------------->> error')
-    let data = {
-      err: error,
-      stack: error.stack
     }
-    let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
-    new Image().src = src
-  })
 
+    console.init({
+      // levels: ["info", "warn", "error"],
+      levelEnabledOnServer: 'error',
+      // levelForConsoleLog: 'info',
+      serverUrl: '/logs'
+    })
+
+    var uncaught = require('uncaught')
+    uncaught.start()
+    uncaught.addListener(function (error) {
+      postMsg(error.stack)
+    })
 }
