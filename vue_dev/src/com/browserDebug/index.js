@@ -215,7 +215,13 @@ export default (_config, window) => {
   var uncaught = require('uncaught')
   uncaught.start()
   uncaught.addListener(function (error) {
-    console.log(error, '\n ---------------->> error')
+    // console.log(error.stack, '\n ---------------->> error')
+    let data = {
+      err: error,
+      stack: error.stack
+    }
+    let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
+    new Image().src = src
   })
 
 }
