@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Page from '@/page/index'
 import Home from '@/page/home'
+import Err from '@/page/home/error'
 import AddProject from '@/page/home/addProject'
 import ProjectList from '@/page/home/projectList'
 import ProjectDetails from '@/page/home/projectList/projectDetails'
@@ -26,6 +27,11 @@ export default new Router({
       path: '/home',
       component: Home,
       children: [
+        {
+          path: '/home/error',
+          name: 'error',
+          component: Err
+        },
         {
           path: '/home/addProject',
           name: 'addProject',
