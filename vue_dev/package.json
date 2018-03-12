@@ -19,6 +19,7 @@
     "fingerprintjs2": "^1.6.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "moment": "^2.21.0",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^3.1.0",
     "vue-router": "^3.0.1",

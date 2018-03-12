@@ -22,6 +22,7 @@ const index = require('./routes/index')
 const file_v1 = require('./routes/file_v1')
 const users_v1 = require('./routes/users_v1')
 const project_v1 = require('./routes/project_v1')
+const projectErrorInfo_v1 = require('./routes/projectErrorInfo_v1')
 const api = require('./routes/api')
 
 // 自定义 日志打印
@@ -130,6 +131,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users_v1.routes(), users_v1.allowedMethods())
 app.use(project_v1.routes(), project_v1.allowedMethods())
+app.use(projectErrorInfo_v1.routes(), projectErrorInfo_v1.allowedMethods())
 app.use(file_v1.routes(), file_v1.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
 

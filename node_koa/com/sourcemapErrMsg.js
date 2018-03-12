@@ -13,7 +13,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
     var file = ''
     var _arr = err_msg.filename.match(/\/[a-zA-Z_.]+$/g)
     if (_arr) {
-      file = path.resolve(__dirname, '../data' + _arr[0])
+      file = path.resolve(__dirname, '../data/' + err_msg.projectId + _arr[0])
     } else {
       return {
         err: 'file error'

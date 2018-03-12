@@ -29,10 +29,14 @@ export default {
       }
       return _u
     })(),
-    token: storage.getItem('token') || ''
+    token: storage.getItem('token') || '',
+    checkProject: {}
   },
   // 同步操作
   mutations: {
+    CHECKPROJECT (state, checkProject) {
+      state.checkProject = checkProject
+    },
     UPDATE_TOKEN (state, token) {
       if (token) {
         state.token = token
@@ -64,12 +68,18 @@ export default {
     user_signout ({commit}) {
       commit('USER_SIGNOUT')
       commit('UPDATE_TOKEN', null)
+    },
+    actions_checkProject ({commit}, checkProject) {
+      commit('CHECKPROJECT', checkProject)
     }
   },
   // getters
   getters: {
     getUserId: function (state) {
       return (state.user && state.user._id) || ''
+    },
+    getCheckProjectId: function (state) {
+      return (state.checkProject && state.checkProject._id) || ''
     }
   }
 }

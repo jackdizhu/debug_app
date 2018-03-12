@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-card class="box-card" v-for="(item, key) in projectList" :key="key">
-        <div slot="header" class="bootclearfix box-card-header" @click="showProjectDetails">
+        <div slot="header" class="bootclearfix box-card-header" @click="showProjectDetails(item)">
           <span>{{item.name}}</span>
           <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit">编辑</el-button>
         </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // import {
 //   Layout,
 //   Row,
@@ -46,15 +46,22 @@ export default {
   },
   // 计算
   computed: {
-    ...mapState(['user']),
+    ...mapState([
+      'user'
+    ]),
     ...mapGetters(['getUserId'])
   },
   // 数据监听
   watch: {},
   // 事件方法
   methods: {
-    showProjectDetails () {
-      this.$router.push('/home/projectList/projectDetails')
+    ...mapActions(['actions_checkProject']),
+    showProjectDetails (project) {
+      this.actions_checkProject(project)
+      console.log(project)
+      setTimeout(() => {
+        this.$router.push('/home/projectList/projectDetails')
+      }, 0)
     },
     edit () {
       console.log('edit')
