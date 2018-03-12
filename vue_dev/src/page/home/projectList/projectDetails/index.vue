@@ -14,8 +14,8 @@
       <el-collapse-item title="error " :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
         <div>
           <p>filename: {{item.filename}}</p>
-          <p>column: {{item.column}}</p>
           <p>line: {{item.line}}</p>
+          <p>column: {{item.column}}</p>
         </div>
       </el-collapse-item>
     </el-collapse>
