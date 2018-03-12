@@ -21,6 +21,6 @@ data: () => {}
 mongodump -h 127.0.0.1 -o ./
 
 // 还原 nodeKoa 数据库
-mongorestore -d tank ./nodeKoa/
+mongorestore -d nodeKoa ./nodeKoa/
 
 http://127.0.0.1:3000/project_v1/addProjectErrorInfo?key=e0f1e39c0ef40253b5b21d24f137f69b&line=321&column=9&filename=http://127.0.0.1/AlloyLever/public/dist/js/build.js
