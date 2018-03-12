@@ -1,4 +1,4 @@
-export default (_config) => {
+export default (_config, window) => {
   const config = {
     // 错误报告地址
     reportUrl: _config.reportUrl || '//127.0.0.1/',
@@ -9,6 +9,8 @@ export default (_config) => {
     logs: []
   }
   window.onerror = function (msg, url, line, col, error) {
+    console.log('---------------')
+
     // 采集浏览器指纹
     var _Fingerprint2 = {}
     var Fingerprint2 = require('fingerprintjs2')

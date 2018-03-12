@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import Router from 'vue-router'
@@ -10,7 +8,7 @@ import Api from './com/api.js'
 // 时间日期 处理库
 import moment from 'moment'
 
-import browserDebug from './com/browserDebug/index.js'
+// import browserDebug from './com/browserDebug/index.js'
 
 // import IView from 'iview'
 // import 'iview/dist/styles/iview.css'
@@ -21,10 +19,15 @@ import '@/them/index.less'
 import '@/less/com.less'
 // import config from './com/config.js'
 
-browserDebug({
-  reportUrl: 'http://127.0.0.1:3000/projectErrorInfo_v1/addProjectErrorInfo',
-  key: '7433dcd97077d2502cf0e3051001bc3b'
-})
+// browserDebug({
+//   reportUrl: 'http://127.0.0.1:3000/projectErrorInfo_v1/addProjectErrorInfo',
+//   key: '7433dcd97077d2502cf0e3051001bc3b'
+// }, window)
+((W) => {
+  W.onerror = function (msg, url, line, col, error) {
+    console.log({msg, url, line, col, error})
+  }
+})(window)
 
 // 使用 路由
 Vue.use(Router)
