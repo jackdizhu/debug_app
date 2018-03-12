@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const projectModel = require('../models/project')
+const fileModel = require('../models/file')
 // const util = require('util')
 const md5 = require("md5")
 

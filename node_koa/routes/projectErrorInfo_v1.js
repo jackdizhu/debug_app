@@ -53,6 +53,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
 
     if (_project) {
       _initProjectErrorInfo.projectId = _project._id
+      _initProjectErrorInfo.user_id = _project.user_id
       projectErrorInfo = await projectErrorInfoModel.insert(_initProjectErrorInfo)
       if (projectErrorInfo) {
         res_code = '0'

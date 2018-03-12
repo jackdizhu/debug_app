@@ -13,13 +13,12 @@
             class="upload"
             :action="$api.upload"
             multiple
-            :limit="3"
+            :limit="1"
             :on-change="handleChange"
             :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
           </el-upload>
-          <el-input type="text" v-model="formProject.mapFile" />
         </el-form-item>
         <el-form-item label="mapURL" prop="mapFileUrl">
           <el-input type="text" v-model="formProject.mapFileUrl" />
@@ -97,7 +96,11 @@ export default {
   // 事件方法
   methods: {
     handleChange (file, fileList) {
-      // this.fileList = fileList.slice(-3)
+      if (file) {
+        // let { size, name, type } = file.raw
+        let _name = (file.response && file.response.file && file.response.file.nowName) || ''
+        this.formProject.mapFile = _name
+      }
     },
     handleSubmit (name) {
       this.formProject.userId = this.getUserId

@@ -13,7 +13,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
     var file = ''
     var _arr = err_msg.filename.match(/\/[a-zA-Z_.]+$/g)
     if (_arr) {
-      file = path.resolve(__dirname, '../data/' + err_msg.projectId + _arr[0])
+      file = path.resolve(__dirname, '../data/' + err_msg.user_id + _arr[0])
     } else {
       return {
         err: 'file error'
@@ -37,7 +37,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
 
     // 导出 原始文件信息
     let sourceMapFileExport = require('./sourceMapFileExport')
-    await sourceMapFileExport(obj, err_msg.projectId)
+    await sourceMapFileExport(obj, err_msg.user_id)
 
     var smc = new sourceMap.SourceMapConsumer(obj)
     var originalPosition = smc.originalPositionFor({
@@ -48,7 +48,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
 
     // 导出 原始文件信息
     let sourcemapCode = require('./sourcemapCode')
-    let code = await sourcemapCode(originalPosition, err_msg.projectId)
+    let code = await sourcemapCode(originalPosition, err_msg.user_id)
 
     originalPosition.code = code
 
