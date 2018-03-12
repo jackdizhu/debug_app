@@ -23,4 +23,4 @@ mongodump -h 127.0.0.1 -o ./
 // 还原 nodeKoa 数据库
 mongorestore -d nodeKoa ./nodeKoa/
 
-http://127.0.0.1:3000/project_v1/addProjectErrorInfo?key=e0f1e39c0ef40253b5b21d24f137f69b&line=321&column=9&filename=http://127.0.0.1/AlloyLever/public/dist/js/build.js
+http://127.0.0.1:3000/projectErrorInfo_v1/addProjectErrorInfo?key=e0f1e39c0ef40253b5b21d24f137f69b&line=321&column=9&filename=http://127.0.0.1/AlloyLever/public/dist/js/build.js&msg=ReferenceError:%20d%20is%20not%20defined%20@%20Object.3../alloy-lever.js%20(http://127.0.0.1/AlloyLever/public/dist/js/build.js:321:9)%20@%20s%20(http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:265)%20@%20e%20(http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:436)%20@%20http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:465

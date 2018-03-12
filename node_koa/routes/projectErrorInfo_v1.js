@@ -23,6 +23,20 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
       return new Date().getTime()
     })(),
     msg: msg,
+    name: (() => {
+      if (!msg) {
+        return ''
+      }
+
+      let _a = msg.split('@')
+      let _name = ''
+      if (_a.length) {
+        _name = _a[0]
+      } else {
+        _name = msg
+      }
+      return _name
+    })(),
     line: Number(line) || 0,
     column: Number(column) || 0,
     filename: filename,

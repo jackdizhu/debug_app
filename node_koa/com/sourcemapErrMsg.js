@@ -44,6 +44,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
       line: line,
       column: column
     })
+    originalPosition.name = _msg.msg.split('@')[0]
 
     // 导出 原始文件信息
     let sourcemapCode = require('./sourcemapCode')

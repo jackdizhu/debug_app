@@ -90,6 +90,9 @@ module.exports = {
     msg: {
       type: String
     },
+    name: {
+      type: String
+    },
     line: {
       type: String
     },

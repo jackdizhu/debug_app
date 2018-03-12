@@ -11,11 +11,19 @@
       </el-date-picker>
     </div>
     <el-collapse @change="handleChange">
-      <el-collapse-item title="error " :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
+      <el-collapse-item :title="item.name" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
         <div>
           <p>filename: {{item.filename}}</p>
           <p>line: {{item.line}}</p>
           <p>column: {{item.column}}</p>
+          <p>## 详细信息</p>
+          <div>
+            <p>filename: {{item.ext.source}}</p>
+            <p>line: {{item.ext.line}}</p>
+            <p>column: {{item.ext.column}}</p>
+            <p>code: </p>
+            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea>
+          </div>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -115,6 +123,13 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
+  textarea {
+    resize: none;
+    border: 0;
+    background-color: #f6f8fa;
+    color: #24292e;
+    padding: 8px;
+  }
   .text {
     font-size: 14px;
   }

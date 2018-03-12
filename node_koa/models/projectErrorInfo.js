@@ -20,11 +20,12 @@ const update = function (_id, ext) {
   })
 }
 
-exports.insert = async function ({ projectId, date, msg, filename, line, mapFile, column, code, ext}) {
+exports.insert = async function ({ projectId, date, msg, name, filename, line, mapFile, column, code, ext}) {
   const projectErrorInfo = new ProjectErrorInfoModel()
   projectErrorInfo.projectId = projectId
   projectErrorInfo.date = date
   projectErrorInfo.msg = msg
+  projectErrorInfo.name = name
   projectErrorInfo.line = line
   projectErrorInfo.column = column
   projectErrorInfo.filename = filename
