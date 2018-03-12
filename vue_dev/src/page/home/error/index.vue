@@ -53,6 +53,7 @@ export default {
           this.$message.error('getJson 失败.')
         }
       })
+      console.log(a + b)
     }
   },
   // el 和 data 并未初始化
