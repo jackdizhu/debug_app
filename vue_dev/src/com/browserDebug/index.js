@@ -87,12 +87,19 @@ export default (_config, window) => {
         try {
           returns = originalOrDefaultFunction.apply(console, arguments);
           argumentsArray = Array.prototype.slice.call(arguments);
+          // 处理 原生 错误信息
+          for (let i = 0; i < argumentsArray.length; i++) {
+            if (argumentsArray[i].stack) {
+              argumentsArray[i] = argumentsArray[i].stack
+            }
+          }
           data = { level: level, message: argumentsArray.join(", ") };
           while (!console.stackTrace && index < argumentsArray.length) {
             console.addStackTrace(data, arguments[index]);
             ++index;
           }
-          console.send(data);
+
+          console.send(data)
         } catch (ignore) {
           //
         }
