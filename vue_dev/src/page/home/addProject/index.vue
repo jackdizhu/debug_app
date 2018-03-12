@@ -12,7 +12,8 @@
           <el-upload
             class="upload"
             :action="$api.upload"
-            multiple
+            accept="*.map"
+            :headers="headers"
             :limit="1"
             :on-change="handleChange"
             :file-list="fileList">
@@ -62,6 +63,9 @@ export default {
     }
 
     return {
+      headers: {
+        authorization: ''
+      },
       fileList: [],
       formProject: {
         userId: '',
@@ -88,8 +92,14 @@ export default {
   },
   // 计算
   computed: {
-    ...mapState(['user']),
-    ...mapGetters(['getUserId'])
+    ...mapState([
+      'user',
+      'token'
+    ]),
+    ...mapGetters([
+      'getUserId',
+      'getToken'
+    ])
   },
   // 数据监听
   watch: {},
@@ -136,6 +146,7 @@ export default {
   },
   // 完成了 data 数据的初始化，el没有
   created () {
+    this.headers.authorization = this.getToken
     console.log('created ------------------ 完成了 data 数据的初始化，el没有')
   },
   // 完成了 el 和 data 初始化

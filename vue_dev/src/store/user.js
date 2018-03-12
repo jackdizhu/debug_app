@@ -80,6 +80,9 @@ export default {
     },
     getCheckProjectId: function (state) {
       return (state.checkProject && state.checkProject._id) || ''
+    },
+    getToken: function (state) {
+      return state.token
     }
   }
 }

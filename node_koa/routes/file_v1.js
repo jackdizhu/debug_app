@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const fileModel = require('../models/file')
+const userModel = require('../models/user')
 // const util = require('util')
 const multer = require('koa-multer')
 const path = require('path')
@@ -11,7 +12,7 @@ router.prefix('/file_v1')
 let storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, '../data'))
+    cb(null, path.resolve(__dirname, '../data/temp'))
   },
   filename: function (req, file, cb) {
     let fileFormat = (file.originalname).split(".")
@@ -20,6 +21,13 @@ let storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 router.post('/upload', upload.single('file'), async (ctx, next) => {
+  let uName = ctx.state.decodedToken.name
+  let _user = await userModel.findOne({name: uName})
+
+  if (_user) {
+    log(ctx.req.file)
+  }
+
   const { originalname, path, filename, mimetype, size } = ctx.req.file
 
   let _post = ctx.request.body || {}
@@ -45,7 +53,6 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
 })
 
 router.get('/err', async (ctx, next) => {
-  log(a)
   let token = ''
   let file = {}
   let res_code = '0'
