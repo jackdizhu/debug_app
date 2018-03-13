@@ -47,6 +47,8 @@ module.exports = sourcemapLookup = async (err_msg) => {
         line: line,
         column: column
       })
+      // name 删除字段
+      originalPosition.name = undefined
       // 处理webpack:// 打头的文件路径
       if (originalPosition && originalPosition.source) {
         originalPosition.source = originalPosition.source.replace(/webpack:\/\//, '')

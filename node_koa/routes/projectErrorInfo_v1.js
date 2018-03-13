@@ -18,7 +18,8 @@ const errMsgFormat = (data) => {
       let _a = _obj.msg1.split(' ')
       // 增加 _a.length === 2 判断 length 1 是 build 文件报错
       if (_a.length === 2) {
-        _obj.msg1_ext.name = _a[0]
+        // 删除该字段
+        // _obj.msg1_ext.name = _a[0]
         let _filename = _a[1]
         _obj.msg1_ext.filename = _filename
         if (_filename) {
@@ -71,7 +72,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
     filename: filename,
     mapFile: '',
     code: '',
-    ext: { _errMsg }
+    ext: { }
   }
 
   let user = {}

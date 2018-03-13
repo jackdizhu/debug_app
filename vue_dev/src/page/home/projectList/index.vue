@@ -9,6 +9,9 @@
         <div class="text item">
           {{item.msg}}
         </div>
+        <div class="text item">
+          {{item.key}}
+        </div>
       </el-card>
     </el-container>
   </div>
