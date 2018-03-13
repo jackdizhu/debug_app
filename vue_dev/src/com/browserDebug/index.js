@@ -3,17 +3,17 @@ export default (_config, window) => {
 
     var console = window.console = window.console || {}
 
-    let key = '7433dcd97077d2502cf0e3051001bc3b'
+    let key = 'd812e614c154195f67f745a2882597cd'
     // 采集浏览器指纹
-    var _Fingerprint2 = {}
-    var Fingerprint2 = require('fingerprintjs2')
-    new Fingerprint2().get(function (result, components) {
-      _Fingerprint2.result = result
-      _Fingerprint2.user_agent = components.find(item => {
-        return item.key === 'user_agent'
-      })
-      console.log(_Fingerprint2)
-    })
+    // var _Fingerprint2 = {}
+    // var Fingerprint2 = require('fingerprintjs2')
+    // new Fingerprint2().get(function (result, components) {
+    //   _Fingerprint2.result = result
+    //   _Fingerprint2.user_agent = components.find(item => {
+    //     return item.key === 'user_agent'
+    //   })
+    //   console.log(_Fingerprint2)
+    // })
 
     // process.on('uncaughtException', function(e){
     //     console.error('UE:Catch in process', e)
@@ -56,7 +56,7 @@ export default (_config, window) => {
       postMsgFormat(msg)
       let data = {
         data: msg,
-        _Fingerprint2: _Fingerprint2,
+        // _Fingerprint2: _Fingerprint2,
         key: key
       }
       // console.log(data)

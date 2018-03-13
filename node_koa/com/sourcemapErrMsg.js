@@ -9,7 +9,7 @@ module.exports = sourcemapLookup = async (err_msg) => {
 
     var path = require("path")
     var file = ''
-    var _arr = err_msg.filename.match(/\/[a-zA-Z_.]+$/g)
+    var _arr = err_msg.filename.match(/\/[a-zA-Z0-9_.]+$/g)
     if (_arr) {
       file = path.resolve(__dirname, '../data/' + err_msg.user_id + _arr[0])
     } else {
@@ -38,17 +38,22 @@ module.exports = sourcemapLookup = async (err_msg) => {
     } catch (error) {
       console.log(error)
     }
+    log(file)
     if (obj) {
       // 导出 原始文件信息
       let sourceMapFileExport = require('./sourceMapFileExport')
-      await sourceMapFileExport(obj, err_msg.user_id)
 
       var smc = new sourceMap.SourceMapConsumer(obj)
       originalPosition = smc.originalPositionFor({
         line: line,
         column: column
       })
+      // 处理webpack:// 打头的文件路径
+      if (originalPosition && originalPosition.source) {
+        originalPosition.source = originalPosition.source.replace(/webpack:\/\//, '')
+      }
 
+      await sourceMapFileExport(obj, err_msg.user_id)
       // 导出 原始文件信息
       let sourcemapCode = require('./sourcemapCode')
       let code = await sourcemapCode(originalPosition, err_msg.user_id)
