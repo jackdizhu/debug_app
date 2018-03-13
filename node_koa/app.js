@@ -73,6 +73,7 @@ app.use(koaJwt(
   method: ['OPTIONS'],
   path: [
     /^\/$/,
+    /^\/favicon.ico$/,
     /^\/users_v[0-9]\/login/,
     /^\/users_v[0-9]\/register/,
     /^\/projectErrorInfo_v[0-9]\/addProjectErrorInfo/
@@ -109,6 +110,9 @@ app.use(views(path.resolve(__dirname, '/views'), {
 // 针对 /api 的中间件
 app.use(async (ctx, next) => {
   await next()
+  // 设置 header
+  ctx.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8;')
+  ctx.set("Access-Control-Allow-Headers", "authorization,Content-Type")
   if (/^\/api\//.test(ctx.path)) {
     // 处理 !==200 错误
     if (ctx.response.status !== 200) {

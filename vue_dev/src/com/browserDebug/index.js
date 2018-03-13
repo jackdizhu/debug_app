@@ -1,3 +1,4 @@
+import { request } from '../http.js'
 export default (_config, window) => {
 
     var console = window.console = window.console || {}
@@ -60,8 +61,14 @@ export default (_config, window) => {
       }
       // console.log(data)
       // let src = console.config.serverUrl + '?data=' + JSON.stringify(data) + '&key=' + key
-      let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
-      new Image().src = src
+      let src = console.config.serverUrl
+      request({
+        url: src,
+        type: 'GET',
+        params: data
+      }).then(res => {
+      })
+      // new Image().src = src
     }
     console.readConfig = function (config) {
       var index, level;
