@@ -54,7 +54,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
 
   let _errMsg = errMsgFormat(data)
   // log(_errMsg)
-  let name = _errMsg.msg1_ext.name
+  let name = _errMsg.name
   let filename = _errMsg.msg1_ext.filename
   let line = (_errMsg.msg1_ext && _errMsg.msg1_ext.line) || 0
   let column = (_errMsg.msg1_ext && _errMsg.msg1_ext.column) || 0

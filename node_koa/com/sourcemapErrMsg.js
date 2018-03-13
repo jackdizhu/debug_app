@@ -38,7 +38,6 @@ module.exports = sourcemapLookup = async (err_msg) => {
     } catch (error) {
       console.log(error)
     }
-    log(file)
     if (obj) {
       // 导出 原始文件信息
       let sourceMapFileExport = require('./sourceMapFileExport')
@@ -53,11 +52,12 @@ module.exports = sourcemapLookup = async (err_msg) => {
         originalPosition.source = originalPosition.source.replace(/webpack:\/\//, '')
       }
 
-      await sourceMapFileExport(obj, err_msg.user_id)
-      // 导出 原始文件信息
-      let sourcemapCode = require('./sourcemapCode')
-      let code = await sourcemapCode(originalPosition, err_msg.user_id)
-      originalPosition.code = code
+      // gulpFile_min.js browserify^15.2.0 打包正常 webpack^3.6.0 不能正常还原原始文件
+      // await sourceMapFileExport(obj, err_msg.user_id)
+      // // 导出 原始文件信息
+      // let sourcemapCode = require('./sourcemapCode')
+      // let code = await sourcemapCode(originalPosition, err_msg.user_id)
+      // originalPosition.code = code
     }
 
     // 原始文件位置 信息
