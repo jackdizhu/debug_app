@@ -31,6 +31,8 @@ node 端对 sourcemap 逆向解析,还原原始代码
 # v0.5.0
 
 前端修改,调用request方法时获取token,而不是 import 时获取,
+修改 koa-cors --> koa2-cors 并配置
+处理跨域 OPTIONS 设置Access-Control-Max-Age有效期防止重复请求
 
 ## vue 问题
 ```less

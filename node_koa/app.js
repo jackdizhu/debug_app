@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
-const cors = require('koa-cors')
+const cors = require('koa2-cors')
 const koaJwt = require('koa-jwt')
 const path = require('path')
 // const jwt = require('jsonwebtoken')
@@ -88,8 +88,40 @@ app.use(bodyparser({
 // 错误处理模块
 // app.use(error())
 app.use(json())
+
+// app.use(async (ctx, next) => {
+//   await next()
+//   // 设置 header
+//   ctx.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8;')
+//   // 设置 服务器支持的 头信息字段
+//   ctx.set("Access-Control-Allow-Headers", "authorization,Content-Type")
+//   // 设置 预检请求的有效期 OPTIONS 20 天
+//   ctx.set("Access-Control-Max-Age", 1728000)
+//   // 设置是否允许发送 cookie
+//   // ctx.set("Access-Control-Allow-Credentials", true)
+// })
+
 // api 服务器 允许跨域
-app.use(cors())
+app.use(cors({
+  // Access-Control-Allow-Origin
+  origin: function(ctx) {
+    // if (ctx.url === '/test') {
+    //   return false;
+    // }
+    return '*'
+  },
+  // Access-Control-Expose-Headers 哪些Headers可以作为响应的一部分暴露出去
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  // Access-Control-Max-Age 有效期秒数
+  maxAge: 60 * 60 * 24,
+  // Access-Control-Allow-Credentials 客户端携带证书访问
+  credentials: true,
+  // Access-Control-Allow-Methods
+  allowMethods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+  // Access-Control-Allow-Headers
+  allowHeaders: ['Content-Type', 'authorization'],
+}))
+
 app.use(logger())
 app.use(require('koa-static')(path.resolve(__dirname, '/public')))
 
@@ -110,9 +142,6 @@ app.use(views(path.resolve(__dirname, '/views'), {
 // 针对 /api 的中间件
 app.use(async (ctx, next) => {
   await next()
-  // 设置 header
-  ctx.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8;')
-  ctx.set("Access-Control-Allow-Headers", "authorization,Content-Type")
   if (/^\/api\//.test(ctx.path)) {
     // 处理 !==200 错误
     if (ctx.response.status !== 200) {

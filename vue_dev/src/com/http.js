@@ -57,13 +57,14 @@ function post (url, data = {}) {
  */
 function request (obj) {
   let token = storage.getItem('token') || ''
-  axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;'
   axios.defaults.headers['authorization'] = token
+  // axios.defaults.headers['Access-Control-Request-Method'] = 'GET,HEAD,PUT,POST,DELETE'
 
   let { url, params, type } = obj
   return new Promise((resolve, reject) => {
     let fn = null
     if (type === 'POST') {
+      axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       fn = post
     } else {
       fn = get
