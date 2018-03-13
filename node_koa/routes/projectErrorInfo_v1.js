@@ -16,12 +16,25 @@ const errMsgFormat = (data) => {
     if (_obj.msg1) {
       _obj.msg1_ext = {}
       let _a = _obj.msg1.split(' ')
-      if (_a.length) {
+      // 增加 _a.length === 2 判断 length 1 是 build 文件报错
+      if (_a.length === 2) {
         _obj.msg1_ext.name = _a[0]
         let _filename = _a[1]
         _obj.msg1_ext.filename = _filename
         if (_filename) {
-          let _n = _filename.match(/\!([.a-z/]+[a-z]+[.a-z]+)\:([0-9]+)\:([0-9]+)\)$/)
+          let _n = _filename.match(/\!?([.a-zA-Z0-9/]+[a-zA-Z0-9]+[.a-zA-Z0-9]+)\:([0-9]+)\:([0-9]+)\)?$/)
+          if (_n && _n.length) {
+            _obj.msg1_ext.filename = _n[1]
+            _obj.msg1_ext.line = _n[2]
+            _obj.msg1_ext.column = _n[3]
+          }
+        }
+      } else {
+        // 处理 build 文件错误信息
+        _filename = _obj.msg1
+        _obj.msg1_ext.filename = _filename
+        if (_filename) {
+          let _n = _filename.match(/\!?([.a-zA-Z0-9/]+[a-zA-Z0-9]+[.a-zA-Z0-9]+)\:([0-9]+)\:([0-9]+)\)?$/)
           if (_n && _n.length) {
             _obj.msg1_ext.filename = _n[1]
             _obj.msg1_ext.line = _n[2]
@@ -40,6 +53,7 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
   let { key, data } = _get
 
   let _errMsg = errMsgFormat(data)
+  log(_errMsg)
   let name = _errMsg.msg1_ext.name
   let filename = _errMsg.msg1_ext.filename
   let line = (_errMsg.msg1_ext && _errMsg.msg1_ext.line) || 0
