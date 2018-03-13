@@ -6,12 +6,44 @@ const md5 = require("md5")
 
 router.prefix('/projectErrorInfo_v1')
 
+// 普通 onerror 错误处理
+const errMsgFormat = (data) => {
+  let _obj = {}
+  let _arr = data.split('\n    at ')
+  if (_arr.length) {
+    _obj.name = _arr[0]
+    _obj.msg1 = _arr[1]
+    if (_obj.msg1) {
+      _obj.msg1_ext = {}
+      let _a = _obj.msg1.split(' ')
+      if (_a.length) {
+        _obj.msg1_ext.name = _a[0]
+        let _filename = _a[1]
+        _obj.msg1_ext.filename = _filename
+        if (_filename) {
+          let _n = _filename.match(/\!([.a-z/]+[a-z]+[.a-z]+)\:([0-9]+)\:([0-9]+)\)$/)
+          if (_n && _n.length) {
+            _obj.msg1_ext.filename = _n[1]
+            _obj.msg1_ext.line = _n[2]
+            _obj.msg1_ext.column = _n[3]
+          }
+        }
+      }
+    }
+  }
+  return _obj
+}
 // 添加记录
 router.get('/addProjectErrorInfo', async (ctx, next) => {
   let _get = ctx.request.query || {}
-  let { msg, key, filename, line, column, data } = _get
-  log(data)
+  // let { msg, key, filename, line, column, data } = _get
+  let { key, data } = _get
 
+  let _errMsg = errMsgFormat(data)
+  let name = _errMsg.msg1_ext.name
+  let filename = _errMsg.msg1_ext.filename
+  let line = (_errMsg.msg1_ext && _errMsg.msg1_ext.line) || 0
+  let column = (_errMsg.msg1_ext && _errMsg.msg1_ext.column) || 0
   // var err_msg = [{
   //   "msg": "ReferenceError: d is not defined @ Object.3../alloy-lever.js (http://127.0.0.1/AlloyLever/public/dist/js/build.js:321:9) @ s (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:265) @ e (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:436) @ http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:465",
   //   "filename": "http://127.0.0.1/AlloyLever/public/dist/js/build.js",
@@ -24,33 +56,20 @@ router.get('/addProjectErrorInfo', async (ctx, next) => {
     date: (() => {
       return new Date().getTime()
     })(),
-    msg: msg,
-    name: (() => {
-      if (!msg) {
-        return ''
-      }
-
-      let _a = msg.split('@')
-      let _name = ''
-      if (_a.length) {
-        _name = _a[0]
-      } else {
-        _name = msg
-      }
-      return _name
-    })(),
+    msg: data,
+    name: name,
     line: Number(line) || 0,
     column: Number(column) || 0,
     filename: filename,
     mapFile: '',
     code: '',
-    ext: {}
+    ext: { _errMsg }
   }
 
   let user = {}
   let res_code = '-1'
   let resMsg = ''
-  if (key) {
+  if (key && data) {
     let _project = await projectModel.findOne({ key: key })
 
     if (_project) {

@@ -55,7 +55,7 @@ export default (_config, window) => {
     const postMsg = (msg) => {
       postMsgFormat(msg)
       let data = {
-        errMsg: msg,
+        data: msg,
         _Fingerprint2: _Fingerprint2,
         key: key
       }

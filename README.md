@@ -34,6 +34,10 @@ node 端对 sourcemap 逆向解析,还原原始代码
 修改 koa-cors --> koa2-cors 并配置
 处理跨域 OPTIONS 设置Access-Control-Max-Age有效期防止重复请求
 
+# v0.5.0
+
+前端错误信息收集修改 上传 error.stack 信息,由后端从该数据中提取 name, filename, line, column 等信息
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@
