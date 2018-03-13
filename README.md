@@ -7,11 +7,27 @@ koa^2.2 + mongoose^4.7.6 + vue^2.5.2 + iview^2.10.0-rc.1 简单登录注册 采�
 
 # v0.3.0
 
+``` js
+{
+  "msg": "ReferenceError: d is not defined @ Object.3../alloy-lever.js (http://127.0.0.1/AlloyLever/public/dist/js/build.js:321:9) @ s (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:265) @ e (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:436) @ http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:465",
+  "filename": "http://127.0.0.1/AlloyLever/public/dist/js/build.js",
+  "line": 321,
+  "column": 9
+}
+```
 初步完成 登录注册,添加项目,查看错误信息
+node 端对 sourcemap 逆向解析,还原原始代码
+并通过页面上传的错误信息 filename line column 信息映射到原始文件
+并显示错误行数前后5行代码片段
 
 # v0.4.0
 
 错误处理, bug 修复
+前端错误捕获修改,
+通过 window.error 捕获普通异常信息,
+通过劫持 console.error 捕获 vue 等框架处理过的错误信息,
+通过 uncaught 模块处理[ Uncaught (in promise) TypeError ] promise 中未catch的异常信息
+
 
 ## vue 问题
 ```less
