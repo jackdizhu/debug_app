@@ -75,7 +75,7 @@ app.use(koaJwt(
     /^\/$/,
     /^\/users_v[0-9]\/login/,
     /^\/users_v[0-9]\/register/,
-    /^\/project_v[0-9]\/addProjectErrorInfo/
+    /^\/projectErrorInfo_v[0-9]\/addProjectErrorInfo/
   ]
 }))
 

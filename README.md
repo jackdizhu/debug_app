@@ -28,6 +28,9 @@ node 端对 sourcemap 逆向解析,还原原始代码
 通过劫持 console.error 捕获 vue 等框架处理过的错误信息,
 通过 uncaught 模块处理[ Uncaught (in promise) TypeError ] promise 中未catch的异常信息
 
+# v0.5.0
+
+前端修改,调用request方法时获取token,而不是 import 时获取,
 
 ## vue 问题
 ```less
