@@ -65,6 +65,10 @@ browserify^15.2.0 打包正常 webpack^3.6.0 不能正常还原原始文件 (暂
 token 验证失败返回问题处理 先执行 koa2-cors 添加跨域头部,保证保证后面错误可以正常返回被js处理
 统一处理 登录超时token验证失败问题,request不在抛出Promise err
 
+# v0.8.0
+
+报错详情页面显示日期时间,
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@

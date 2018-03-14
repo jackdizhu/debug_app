@@ -73,7 +73,7 @@ function request (obj) {
     }
     fn(url, params).then(function (res) {
       // console.log(res, 'request then')
-      let status = (res.response && res.response.status) || 0
+      // let status = (res.response && res.response.status) || 0
       let data = res.data || {}
       // 处理token验证失效 问题
       if (data.error === 'Authentication Failed') {
@@ -84,11 +84,12 @@ function request (obj) {
         })
         // 返回 错误
         // reject({ code: status, err: 'requestErr' })
+        console.log(res, 'Authentication Failed')
       } else {
         resolve(data)
       }
     }).catch(err => {
-      // console.log(err, 'request catch')
+      console.log(err, 'request catch')
       // let status = (err.response && err.response.status) || 0
       // reject({ code: status, err: 'requestErr' })
     })
