@@ -62,6 +62,8 @@ browserify^15.2.0 打包正常 webpack^3.6.0 不能正常还原原始文件 (暂
 # v0.7.0
 
 项目信息增加编辑功能,
+token 验证失败返回问题处理 先执行 koa2-cors 添加跨域头部,保证保证后面错误可以正常返回被js处理
+统一处理 登录超时token验证失败问题,request不在抛出Promise err
 
 ## vue 问题
 ```less
