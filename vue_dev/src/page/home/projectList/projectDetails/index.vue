@@ -21,8 +21,9 @@
             <p>filename: {{item.ext.source}}</p>
             <p>line: {{item.ext.line}}</p>
             <p>column: {{item.ext.column}}</p>
-            <p>code: </p>
-            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea>
+            <!-- 暂时不显示 代码片段 -->
+            <!-- <p>code: </p>
+            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea> -->
           </div>
         </div>
       </el-collapse-item>
