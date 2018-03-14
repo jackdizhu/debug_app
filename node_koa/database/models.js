@@ -10,7 +10,7 @@ module.exports = {
       required: true
     },
     date: {
-      type: String,
+      type: Number,
       required: true
     },
     email: {
@@ -33,7 +33,7 @@ module.exports = {
       required: true
     },
     date: {
-      type: String,
+      type: Number,
       required: true
     },
     msg: {
@@ -74,6 +74,10 @@ module.exports = {
       type: String,
       required: true
     },
+    date: {
+      type: Number,
+      required: true
+    },
     ext: {
       type: Object
     }
@@ -84,7 +88,7 @@ module.exports = {
       required: true
     },
     date: {
-      type: String,
+      type: Number,
       required: true
     },
     msg: {

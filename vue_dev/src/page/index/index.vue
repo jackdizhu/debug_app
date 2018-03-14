@@ -158,7 +158,7 @@ export default {
               console.log(res, 'this.$api.mock')
               this.user_signin(res)
 
-              this.$router.push('/home')
+              this.$router.push('/home/projectList')
             } else {
               this.$message.error('登录失败.')
             }

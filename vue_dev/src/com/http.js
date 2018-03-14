@@ -1,6 +1,7 @@
 import axios from 'axios'
 import https from 'https'
 import storage from '../com/com.js'
+import router from '../router/index.js'
 
 axios.defaults.timeout = 1000 * 60 * 60
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/mock/5a522f2eb9574d08787bf76a/app1'
@@ -70,11 +71,25 @@ function request (obj) {
       fn = get
     }
     fn(url, params).then(function (res) {
+      console.log(res, 'request then')
+      let status = (res.response && res.response.status) || 0
       let data = res.data || {}
+      if (status === 401) {
+        storage.removeItem('token')
+        router.push({
+          path: '/'
+        })
+      }
       resolve(data)
     }).catch(err => {
+      console.log(err, 'request catch')
       let status = (err.response && err.response.status) || 0
-      console.log(status, 'request catch err')
+      if (status === 401) {
+        storage.removeItem('token')
+        router.push({
+          path: '/'
+        })
+      }
       resolve({ code: status, err: 'requestErr' })
       // reject(err) // 返回错误
     })

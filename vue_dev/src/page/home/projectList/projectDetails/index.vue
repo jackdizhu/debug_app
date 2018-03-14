@@ -103,7 +103,8 @@ export default {
       if (res.res_code === '0') {
         this.projectErrorInfoList = res.projectErrorInfoList
         for (let i = 0; i < this.projectErrorInfoList.length; i++) {
-          this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('yyyy-MM-dd')
+          console.log(typeof this.projectErrorInfoList[i].date)
+          // this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('yyyy-MM-dd')
         }
         console.log(res, 'this.$api.mock')
       } else {

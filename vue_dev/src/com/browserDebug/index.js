@@ -3,7 +3,7 @@ export default (_config, window) => {
 
     var console = window.console = window.console || {}
 
-    let key = 'd812e614c154195f67f745a2882597cd'
+    let key = '53cdb1da9705421e708a5d6de380b026'
     // 采集浏览器指纹
     // var _Fingerprint2 = {}
     // var Fingerprint2 = require('fingerprintjs2')

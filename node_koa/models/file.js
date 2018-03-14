@@ -5,12 +5,13 @@
 const dbHandel = require('../database/index')
 const FileModel = dbHandel.getModel('file')
 
-exports.insert = function ({ name, size, nowName }) {
+exports.insert = function ({ name, size, nowName, date }) {
   const file = new FileModel()
 
   file.name = name
   file.nowName = nowName
   file.size = size
+  file.date = date
 
   return file.save()
 }
