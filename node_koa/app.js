@@ -139,6 +139,20 @@ app.use(views(path.resolve(__dirname, '/views'), {
 
 // routes
 
+// 针对 401 token 验证失败 没有返回问题
+// app.use(async (ctx, next) => {
+//   await next()
+//   // 处理 !==200 错误
+//   if (ctx.response.status !== 401) {
+//     ctx.body = {
+//       obj: {
+//         res_code: '-9',
+//         msg: 'Authentication Failed'
+//       }
+//     }
+//   }
+// })
+
 // 针对 /api 的中间件
 app.use(async (ctx, next) => {
   await next()
