@@ -8,7 +8,7 @@
         <el-form-item label="项目描述" prop="msg">
           <el-input type="textarea" v-model="formProject.msg" />
         </el-form-item>
-        <el-form-item label="map文件" prop="mapFile">
+        <!-- <el-form-item label="map文件" prop="mapFile">
           <el-upload
             class="upload"
             :action="$api.upload"
@@ -19,7 +19,7 @@
             :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
         <!-- mapFileUrl 功能后面做 -->
         <!-- <el-form-item label="mapURL" prop="mapFileUrl">
           <el-input type="text" v-model="formProject.mapFileUrl" />
