@@ -44,7 +44,7 @@ app.use(cors({
   // Access-Control-Expose-Headers 哪些Headers可以作为响应的一部分暴露出去
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   // Access-Control-Max-Age 有效期秒数
-  maxAge: 60 * 60 * 24,
+  maxAge: 60,
   // Access-Control-Allow-Credentials 客户端携带证书访问
   credentials: true,
   // Access-Control-Allow-Methods
