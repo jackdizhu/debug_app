@@ -59,11 +59,12 @@ function post (url, data = {}) {
  */
 function request (obj) {
   let token = storage.getItem('token') || ''
-  // axios.defaults.headers['authorization'] = token // 增加该 header 值不是简单请求 会发起 options 请求
-  axios.defaults.headers['Authorization'] = token // Authorization 是简单请求
+  let { url, params, type } = obj
+  // 增加该 header 值不是简单请求 会发起 options 请求
+  // axios.defaults.headers['Authorization'] = token
+  params.token = token // 是简单请求
   axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
 
-  let { url, params, type } = obj
   return new Promise((resolve, reject) => {
     let fn = null
     if (type === 'POST') {
@@ -78,7 +79,7 @@ function request (obj) {
       // 处理token验证失效 问题
       if (data.error === 'Authentication Failed') {
         Message.error('登录超时,请重新登录.')
-        storage.removeItem('token')
+        // storage.removeItem('token')
         router.push({
           path: '/'
         })

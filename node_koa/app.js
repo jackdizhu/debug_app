@@ -42,11 +42,11 @@ app.use(cors({
     return '*'
   },
   // Access-Control-Expose-Headers 哪些Headers可以作为响应的一部分暴露出去
-  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-  // Access-Control-Max-Age 有效期秒数
-  maxAge: 60 * 60 * 24,
+  // exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  // Access-Control-Max-Age 有效期秒数 60 * 60 * 24
+  maxAge: 60,
   // Access-Control-Allow-Credentials 客户端携带证书访问
-  credentials: true,
+  // credentials: true,
   // Access-Control-Allow-Methods
   allowMethods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   // Access-Control-Allow-Headers
@@ -58,6 +58,11 @@ app.use(require('koa-static')(path.resolve(__dirname, '/public')))
 
 app.use(views(path.resolve(__dirname, '/views'), {
   extension: 'ejs'
+}))
+
+// middlewares
+app.use(bodyparser({
+  enableTypes: ['json', 'form', 'text', 'multipart']
 }))
 
 /**
@@ -107,6 +112,7 @@ app.use(koaJwt(
     tokenKey: 'token',
     getToken: (ctx) => {
       let _token = (ctx.header.authorization || ctx.query.token || (ctx.request.body && ctx.request.body.token) || ctx.cookies.get('token') || '')
+      log(ctx.request.body)
 
       return _token
     }
@@ -122,11 +128,6 @@ app.use(koaJwt(
     /^\/users_v[0-9]\/register/,
     /^\/projectErrorInfo_v[0-9]\/addProjectErrorInfo/
   ]
-}))
-
-// middlewares
-app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text', 'multipart']
 }))
 
 // 错误处理模块
