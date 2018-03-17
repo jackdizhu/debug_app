@@ -1,34 +1,42 @@
 <template>
   <div>
     <el-container>
-      <el-form ref="formProject" :model="formProject" :rules="ruleProject" :label-position="'right'" :label-width="'80px'">
-        <el-form-item label="项目名称" prop="name">
-          <el-input type="text" v-model="formProject.name" :readonly="true"/>
-        </el-form-item>
-        <el-form-item label="项目描述" prop="msg">
-          <el-input type="textarea" v-model="formProject.msg" />
-        </el-form-item>
-        <el-form-item label="map文件" prop="mapFile">
-          <el-upload
-            class="upload"
-            :action="$api.upload"
-            accept="*.map"
-            :headers="headers"
-            :limit="1"
-            :on-change="handleChange"
-            :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-form-item>
-        <!-- mapFileUrl 功能后面做 -->
-        <!-- <el-form-item label="mapURL" prop="mapFileUrl">
-          <el-input type="text" v-model="formProject.mapFileUrl" />
-        </el-form-item> -->
-        <el-form-item>
-          <el-button type="primary" @click="handleSubmit('formProject')">确定</el-button>
-          <el-button type="ghost" @click="handleReset('formProject')" style="margin-left: 8px">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <el-header class="el-header-h5" style="height: 32px;line-height: 32px;">
+        项目编辑
+      </el-header>
+
+      <el-main class="el-main-con">
+        <el-card class="box-card">
+          <el-form ref="formProject" :model="formProject" :rules="ruleProject" :label-position="'right'" :label-width="'80px'">
+            <el-form-item label="项目名称" prop="name">
+              <el-input type="text" v-model="formProject.name" :readonly="true"/>
+            </el-form-item>
+            <el-form-item label="项目描述" prop="msg">
+              <el-input type="textarea" v-model="formProject.msg" />
+            </el-form-item>
+            <el-form-item label="map文件" prop="mapFile">
+              <el-upload
+                class="upload"
+                :action="$api.upload"
+                accept="*.map"
+                :headers="headers"
+                :limit="1"
+                :on-change="handleChange"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
+            </el-form-item>
+            <!-- mapFileUrl 功能后面做 -->
+            <!-- <el-form-item label="mapURL" prop="mapFileUrl">
+              <el-input type="text" v-model="formProject.mapFileUrl" />
+            </el-form-item> -->
+            <el-form-item>
+              <el-button type="primary" @click="handleSubmit('formProject')">确定</el-button>
+              <el-button type="ghost" @click="handleReset('formProject')" style="margin-left: 8px">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-main>
     </el-container>
   </div>
 </template>
@@ -182,4 +190,7 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
+  .box-card{
+    padding: 28px 6px 30px 6px;
+  }
 </style>
