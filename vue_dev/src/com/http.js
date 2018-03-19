@@ -97,4 +97,33 @@ function request (obj) {
   })
 }
 
-export { request }
+/*
+  this.$requestAll([
+    this.$request({
+      url: this.$api.mock,
+      type: 'GET',
+      params: {}
+    }),
+    this.$request({
+      url: this.$api.mock,
+      type: 'POST',
+      params: {}
+    })
+  ]).then((arg) => {
+    console.log(arg, '--requestAll--')
+  })
+ */
+function requestAll (_requestArr) {
+  return new Promise((resolve, reject) => {
+    axios.all(_requestArr)
+    .then(axios.spread(function (...params) {
+      resolve(params)
+    })).catch(err => {
+      console.log(err, 'requestAll catch err')
+      resolve({ err: 'requestErr' })
+      // reject(err) // 返回错误
+    })
+  })
+}
+
+export { request, requestAll }
