@@ -85,6 +85,7 @@ header 设置 'Authorization' koa-jwt 读取为 'authorization' (header 不区�
 
 token 修改为以参数形式发送 不再发送 OPTIONS 请求
 bodyparser koa中间件顺序调整,处理 koaJwt 获取不到post参数问题
+http.js 增加 axios requestAll 方法 (axios.all)
 
 ## vue 问题
 ```less
