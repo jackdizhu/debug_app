@@ -80,6 +80,12 @@ ctx.header.authorization
 浏览器端 axios 设置
 axios.defaults.headers['Authorization'] = token
 header 设置 'Authorization' koa-jwt 读取为 'authorization' (header 不区分大小写)
+修改后 GET 请求不再发送 OPTIONS 请求 POST 仍然发送 OPTIONS 请求 url 地址不一样(包括get参数 不包括post参数 )会重新发送 OPTIONS 请求
+
+# v1.0.0
+
+token 修改为以参数形式发送 不再发送 OPTIONS 请求
+bodyparser koa中间件顺序调整,处理 koaJwt 获取不到post参数问题
 
 ## vue 问题
 ```less
