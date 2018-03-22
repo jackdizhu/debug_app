@@ -35,7 +35,7 @@
                 <p>line: {{item.line}}</p>
                 <p>column: {{item.column}}</p>
                 <div v-if="item.ext" class="detailed-information">
-                  <p class="tit">详细错误信息</p>
+                  <p class="tit marginT">详细错误信息</p>
                   <p>filename: {{item.ext.source}}</p>
                   <p>line: {{item.ext.line}}</p>
                   <p>column: {{item.ext.column}}</p>
@@ -256,6 +256,9 @@ export default {
   .item-box {
     .tit {
       color: #a6d734;
+    }
+    .tit.marginT {
+      margin-top: 12px;
     }
   }
 </style>
