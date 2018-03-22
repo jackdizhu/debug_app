@@ -31,15 +31,16 @@ exports.insert = async function ({ projectId, date, msg, name, filename, line, m
   projectErrorInfo.filename = filename
   projectErrorInfo.mapFile = mapFile
   projectErrorInfo.code = code
+  // projectErrorInfo.ext = ext
 
   // 获取 错误信息
   let text = await sourcemapErrMsg({
     "projectId": projectId,
     "user_id": user_id,
-    "msg": "ReferenceError: d is not defined @ Object.3../alloy-lever.js (http://127.0.0.1/AlloyLever/public/dist/js/build.js:321:9) @ s (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:265) @ e (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:436) @ http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:465",
-    "filename": "http://127.0.0.1/AlloyLever/public/dist/js/build.js",
-    "line": 321,
-    "column": 9
+    "msg": msg,
+    "filename": filename,
+    "line": line,
+    "column": column
   })
 
   projectErrorInfo.ext = text

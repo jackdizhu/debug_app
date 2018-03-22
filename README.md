@@ -4,7 +4,16 @@ koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
 # v0.2.0
 
 koa^2.2 + mongoose^4.7.6 + vue^2.5.2 + iview^2.10.0-rc.1 简单登录注册 采用 token 验证(可完全分离部署)
+后端部署log.js 写错误日志到log文件夹
 
+``` js
+app.on('error', (err, ctx) => {
+  log({ err, ctx }, 'error')
+  console.log(err)
+
+  ctx.body = err
+})
+```
 # v0.3.0
 
 ``` js
@@ -33,6 +42,17 @@ node 端对 sourcemap 逆向解析,还原原始代码
 前端修改,调用request方法时获取token,而不是 import 时获取,
 修改 koa-cors --> koa2-cors 并配置
 处理跨域 OPTIONS 设置Access-Control-Max-Age有效期防止重复请求
+
+# v0.5.0
+
+前端错误信息收集修改 上传 error.stack 信息,由后端从该数据中提取 name, filename, line, column 等信息
+
+# v0.6.0
+
+后端接收错误信息处理修改,build 文件报错数据解析规则修改
+处理.map文件导出原始文件报错问题
+browserify^15.2.0 打包正常 webpack^3.6.0 不能正常还原原始文件 (暂时不显示代码片段)
+报错信息名称显示为空问题修改
 
 ## vue 问题
 ```less

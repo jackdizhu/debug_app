@@ -64,7 +64,7 @@ function request (obj) {
   return new Promise((resolve, reject) => {
     let fn = null
     if (type === 'POST') {
-      axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       fn = post
     } else {
       fn = get

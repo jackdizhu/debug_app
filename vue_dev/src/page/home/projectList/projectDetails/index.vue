@@ -11,13 +11,13 @@
       </el-date-picker>
     </div>
     <el-collapse @change="handleChange">
-      <el-collapse-item :title="item.name" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
+      <el-collapse-item :title="item.name + ' ------- ' + item.date" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
         <div>
           <p>filename: {{item.filename}}</p>
           <p>line: {{item.line}}</p>
           <p>column: {{item.column}}</p>
           <p>## 详细信息</p>
-          <div>
+          <div v-if="item.ext">
             <p>filename: {{item.ext.source}}</p>
             <p>line: {{item.ext.line}}</p>
             <p>column: {{item.ext.column}}</p>
@@ -102,6 +102,9 @@ export default {
     }).then(res => {
       if (res.res_code === '0') {
         this.projectErrorInfoList = res.projectErrorInfoList
+        for (let i = 0; i < this.projectErrorInfoList.length; i++) {
+          this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('yyyy-MM-dd')
+        }
         console.log(res, 'this.$api.mock')
       } else {
         this.$message.error('查询项目详情失败.')

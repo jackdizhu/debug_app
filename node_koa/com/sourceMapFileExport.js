@@ -31,12 +31,18 @@ function parseSourceMapFile (file) {
 }
 
 function writeSource (sourceMap) {
-  sourceMap.sources.forEach(function (fileName, index) {
+  sourceMap.sources.forEach(async function (fileName, index) {
     // 特别关照下 webpack, 否则无法创建这样的文件夹
     fileName = fileName.replace('webpack:///', '')
-    var fileContent = sourceMap.sourcesContent[index]
-
-    filendir.writeFileSync(dist + fileName, fileContent)
+    fileName = fileName.replace(/\?[^\n]+/, '')
+    if (/\.[a-z]+$/.test(fileName)) {
+      var fileContent = sourceMap.sourcesContent[index]
+      try {
+        await filendir.writeFileSync(dist + fileName, fileContent, { encoding: 'utf8', mode: 438 ,flag: 'w+' })
+      } catch (error) {
+        // log(error)
+      }
+    }
   })
 }
 
