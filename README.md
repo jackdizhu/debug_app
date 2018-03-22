@@ -92,6 +92,10 @@ bodyparser koa中间件顺序调整,处理 koaJwt 获取不到post参数问题
 前端体验优化,新增项目成功清楚表单数据,
 新增项目,项目编辑,项目列表页面样式修改
 
+# v1.0.2
+
+http.js 增加 axios requestAll 方法 (axios.all)
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@
