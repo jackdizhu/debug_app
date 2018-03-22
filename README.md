@@ -71,6 +71,16 @@ token 验证失败返回问题处理 先执行 koa2-cors 添加跨域头部,保�
 逻辑修改,先新增项目部署项目后再上传.map文件
 Access-Control-Max-Age 有效期秒数 (修改方便测试)
 
+# v0.9.0
+
+处理发起请求是先发起 OPTIONS 请求问题,
+node koa2-cors koa-jwt 设置
+Access-Control-Allow-Headers: 'Content-Type,Authorization'
+ctx.header.authorization
+浏览器端 axios 设置
+axios.defaults.headers['Authorization'] = token
+header 设置 'Authorization' koa-jwt 读取为 'authorization' (header 不区分大小写)
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@

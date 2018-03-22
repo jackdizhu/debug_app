@@ -59,14 +59,14 @@ function post (url, data = {}) {
  */
 function request (obj) {
   let token = storage.getItem('token') || ''
-  axios.defaults.headers['authorization'] = token
-  // axios.defaults.headers['Access-Control-Request-Method'] = 'GET,HEAD,PUT,POST,DELETE'
+  // axios.defaults.headers['authorization'] = token // 增加该 header 值不是简单请求 会发起 options 请求
+  axios.defaults.headers['Authorization'] = token // Authorization 是简单请求
+  axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
 
   let { url, params, type } = obj
   return new Promise((resolve, reject) => {
     let fn = null
     if (type === 'POST') {
-      // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       fn = post
     } else {
       fn = get

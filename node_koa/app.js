@@ -50,7 +50,7 @@ app.use(cors({
   // Access-Control-Allow-Methods
   allowMethods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   // Access-Control-Allow-Headers
-  allowHeaders: ['Content-Type', 'authorization'],
+  allowHeaders: ['Content-Type', 'Authorization'],
 }))
 
 app.use(logger())
