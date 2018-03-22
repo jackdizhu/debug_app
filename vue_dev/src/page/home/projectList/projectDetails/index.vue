@@ -21,8 +21,9 @@
             <p>filename: {{item.ext.source}}</p>
             <p>line: {{item.ext.line}}</p>
             <p>column: {{item.ext.column}}</p>
-            <p>code: </p>
-            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea>
+            <!-- 暂时不显示 代码片段 -->
+            <!-- <p>code: </p>
+            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea> -->
           </div>
         </div>
       </el-collapse-item>
@@ -104,7 +105,7 @@ export default {
         this.projectErrorInfoList = res.projectErrorInfoList
         for (let i = 0; i < this.projectErrorInfoList.length; i++) {
           console.log(typeof this.projectErrorInfoList[i].date)
-          // this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('yyyy-MM-dd')
+          this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('YYYY-MM-DD HH:mm:ss')
         }
         console.log(res, 'this.$api.mock')
       } else {
