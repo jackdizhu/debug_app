@@ -1,36 +1,39 @@
 <template>
-  <div id="app">
-    <div class="layout">
-      <Layout :style="{minHeight: '100vh'}">
-        <Header :style="{padding: 0}" class="layout-header-bar Header-con">
-          <!-- <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '20px 20px 0'}" type="navicon-round" size="24"></Icon> -->
-          <h2>
-            debug_app
-          </h2>
-        </Header>
-        <Layout>
-            <Sider ref="sideMenu" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed" class="sideMenu">
-              <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']">
-                <Submenu :name="`${key + 1 + ''}`" v-for="(item, key) in menu.home" :key="key">
-                  <template slot="title">
-                    <Icon type="ios-keypad"></Icon>
-                    {{item.name}}
-                  </template>
-                  <MenuItem :name="`1-${I + 1}`" v-for="(li, I) in item.child" :key="I">{{li.name}}</MenuItem>
-                </Submenu>
-              </Menu>
-            </Sider>
-            <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
-              <router-view/>
-            </Content>
-        </Layout>
-        <Footer class="Footer-con">
-          <h5>
-            debug_app koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
-          </h5>
-        </Footer>
-      </Layout>
-    </div>
+  <div>
+    <el-container :style="{minHeight: '100vh'}">
+      <el-header>
+        <h2>
+          debug_app
+        </h2>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <el-menu
+            default-active="1-2"
+            class="el-menu-left"
+            @open="handleOpen"
+            @close="handleClose">
+            <el-submenu :index="`${key + 1 + ''}`" v-for="(item, key) in menu.home" :key="key">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>{{item.name}}</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item :index="`1-${I + 1}`" v-for="(li, I) in item.child" :key="I" @click="linkTo(li.link)">{{li.name}}</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <router-view/>
+        </el-main>
+      </el-container>
+      <el-footer>
+        <h5>
+          debug_app koa + vue 定位前端 js 错误 (映射原始代码片段及行数)
+        </h5>
+      </el-footer>
+    </el-container>
   </div>
 </template>
 
@@ -84,8 +87,14 @@ export default {
   watch: {},
   // 事件方法
   methods: {
-    collapsedSider () {
-      this.$refs.sideMenu.toggleCollapse()
+    handleOpen (key, keyPath) {
+      // console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      // console.log(key, keyPath)
+    },
+    linkTo (to) {
+      this.$router.push(to)
     }
   },
   // el 和 data 并未初始化
@@ -111,12 +120,39 @@ export default {
 <style lang="less" scoped>
   @import '~@/them/com.less';
 
-  .Header-con{
-    color: #fff;
-    background-color: @title-color;
-    text-align: center;
+  .el-menu-left {
+    text-align: left;
   }
-  .Footer-con{
+
+  .el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
     text-align: center;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+  }
+
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
   }
 </style>

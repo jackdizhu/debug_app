@@ -1,47 +1,45 @@
 <template>
-  <div id="app">
-    <div class="layout">
-      <Layout :style="{minHeight: '100vh'}">
-        <Content class="flex items-center content-center justify-center">
-          <Card style="width:320px">
-            <Tabs type="card">
-              <TabPane label="登录">
-                <Form ref="formLogin" :model="formLogin" :rules="ruleLogin" :label-width="80">
-                  <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formLogin.name" />
-                  </FormItem>
-                  <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formLogin.passwd" />
-                  </FormItem>
-                  <FormItem>
-                    <Button type="primary" @click="handleSubmit('formLogin')">确定</Button>
-                    <Button type="ghost" @click="handleReset('formLogin')" style="margin-left: 8px">重置</Button>
-                  </FormItem>
-                </Form>
-              </TabPane>
-              <TabPane label="注册">
-                <Form ref="formRegister" :model="formRegister" :rules="ruleRegister" :label-width="80">
-                  <FormItem label="用户名" prop="name">
-                    <Input type="text" v-model="formRegister.name" />
-                  </FormItem>
-                  <FormItem label="密码" prop="passwd">
-                    <Input type="password" v-model="formRegister.passwd" />
-                  </FormItem>
-                  <FormItem label="确认密码" prop="passwdCheck">
-                    <Input type="password" v-model="formRegister.passwdCheck" />
-                  </FormItem>
-                  <FormItem>
-                    <Button type="primary" @click="handleSubmit('formRegister')">确定</Button>
-                    <Button type="ghost" @click="handleReset('formRegister')" style="margin-left: 8px">重置</Button>
-                  </FormItem>
-                </Form>
-              </TabPane>
-            </Tabs>
+  <div>
+    <el-container :style="{minHeight: '100vh'}" class="flex items-center content-center justify-center">
 
-          </Card>
-        </Content>
-      </Layout>
-    </div>
+      <div>
+        <el-tabs type="border-card">
+          <el-tab-pane label="登录">
+            <el-form ref="formLogin" :model="formLogin" :rules="ruleLogin" :label-position="'right'" :label-width="'80px'">
+              <el-form-item label="用户名" prop="name">
+                <el-input type="text" v-model="formLogin.name" />
+              </el-form-item>
+              <el-form-item label="密码" prop="passwd">
+                <el-input type="password" v-model="formLogin.passwd" />
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="handleSubmit('formLogin')">确定</el-button>
+                <el-button type="ghost" @click="handleReset('formLogin')" style="margin-left: 8px">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </el-tab-pane>
+          <el-tab-pane label="注册">
+            <el-form ref="formRegister" :model="formRegister" :rules="ruleRegister" :label-position="'right'" :label-width="'80px'">
+              <el-form-item label="用户名" prop="name">
+                <el-input type="text" v-model="formRegister.name" />
+              </el-form-item>
+              <el-form-item label="密码" prop="passwd">
+                <el-input type="password" v-model="formRegister.passwd" />
+              </el-form-item>
+              <el-form-item label="确认密码" prop="passwdCheck">
+                <el-input type="password" v-model="formRegister.passwdCheck" />
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="handleSubmit('formRegister')">确定</el-button>
+                <el-button type="ghost" @click="handleReset('formRegister')" style="margin-left: 8px">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </el-tab-pane>
+        </el-tabs>
+
+      </div>
+
+    </el-container>
   </div>
 </template>
 
@@ -138,12 +136,12 @@ export default {
             params: this.formRegister
           }).then(res => {
             if (res.res_code === '0') {
-              this.$Message.success('注册成功!')
+              this.$message.success('注册成功!')
               console.log(res, 'this.$api.mock')
             }
           })
         } else {
-          this.$Message.error('信息校验失败.')
+          this.$message.error('信息校验失败.')
         }
       })
     },
@@ -156,17 +154,17 @@ export default {
             params: this.formLogin
           }).then(res => {
             if (res.res_code === '0') {
-              this.$Message.success('登录成功!')
+              this.$message.success('登录成功!')
               console.log(res, 'this.$api.mock')
               this.user_signin(res)
 
               this.$router.push('/home')
             } else {
-              this.$Message.error('登录失败.')
+              this.$message.error('登录失败.')
             }
           })
         } else {
-          this.$Message.error('信息校验失败.')
+          this.$message.error('信息校验失败.')
         }
       })
     },
@@ -202,11 +200,40 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .layout-con{
-    height: 100%;
-    width: 100%;
+  .el-form{
+    width: 412px;
+    height: 320px;
   }
-  .Row-con{
-    height: 100%;
+
+  .el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+  }
+
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
   }
 </style>

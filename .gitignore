@@ -25,5 +25,6 @@ npm-debug.log
 yarn-debug.log*
 yarn-error.log*
 dist
+/node_koa/data
 views/config.json
 package-lock.json

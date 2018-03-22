@@ -2,6 +2,19 @@ import Vue from 'vue'
 
 // export const USER_SIGNIN = 'user_signin' //登录成功 指向 方法
 // export const USER_SIGNOUT = 'user_signout' //退出登录 指向 方法
+// const _storage = sessionStorage
+const _storage = localStorage
+const storage = {
+  getItem: (item) => {
+    return _storage.getItem(item)
+  },
+  setItem: (item, str) => {
+    return _storage.setItem(item, str)
+  },
+  removeItem: (item) => {
+    return _storage.removeItem(item)
+  }
+}
 
 export default {
 
@@ -9,34 +22,38 @@ export default {
     user: (() => {
       let _u = {}
       try {
-        _u = JSON.parse(sessionStorage.getItem('user'))
+        _u = JSON.parse(storage.getItem('user'))
       } catch (error) {
-        sessionStorage.removeItem('user')
+        storage.removeItem('user')
         _u = {}
       }
       return _u
     })(),
-    token: sessionStorage.getItem('token') || ''
+    token: storage.getItem('token') || '',
+    checkProject: {}
   },
   // 同步操作
   mutations: {
+    CHECKPROJECT (state, checkProject) {
+      state.checkProject = checkProject
+    },
     UPDATE_TOKEN (state, token) {
       if (token) {
         state.token = token
-        sessionStorage.setItem('token', token)
+        storage.setItem('token', token)
       } else {
-        sessionStorage.removeItem('token')
+        storage.removeItem('token')
         Vue.delete(state, 'token')
       }
     },
     // 方法名 建议大写
     USER_SIGNIN (state, user) {
-      sessionStorage.setItem('user', JSON.stringify(user))
+      storage.setItem('user', JSON.stringify(user))
       // es6 新增方法 方法用于将所有可枚举的属性的值从一个或多个源对象复制到目标对象
       state.user = user
     },
     USER_SIGNOUT (state) {
-      sessionStorage.removeItem('user')
+      storage.removeItem('user')
       Object.keys(state).forEach(k => Vue.delete(state, k))
     }
   },
@@ -51,6 +68,21 @@ export default {
     user_signout ({commit}) {
       commit('USER_SIGNOUT')
       commit('UPDATE_TOKEN', null)
+    },
+    actions_checkProject ({commit}, checkProject) {
+      commit('CHECKPROJECT', checkProject)
+    }
+  },
+  // getters
+  getters: {
+    getUserId: function (state) {
+      return (state.user && state.user._id) || ''
+    },
+    getCheckProjectId: function (state) {
+      return (state.checkProject && state.checkProject._id) || ''
+    },
+    getToken: function (state) {
+      return state.token
     }
   }
 }

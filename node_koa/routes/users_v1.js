@@ -2,6 +2,9 @@ const router = require('koa-router')()
 const userModel = require('../models/user')
 // const util = require('util')
 const jwt = require('jsonwebtoken')
+const md5 = require("md5")
+// 加盐 key
+const md5Secret = 'lqwiuerpowjflaskdjffkhgoiwurpoqdjlsakjflsdkf'
 // 解密
 // const verify = util.promisify(jwt.verify)
 // 加盐 key
@@ -17,6 +20,9 @@ router.post('/register', async (ctx, next) => {
   let _initUser = {
     name: '',
     password: '',
+    date: (() => {
+      return new Date().getTime()
+    })(),
     email: '',
     phone: '',
     ext: {
@@ -29,7 +35,7 @@ router.post('/register', async (ctx, next) => {
   let msg = ''
   if (name && passwd) {
     _initUser.name = name
-    _initUser.password = passwd
+    _initUser.password = md5(md5(passwd) + md5Secret)
     user = await userModel.insert(_initUser)
     if (user) {
       // 密码 不放回
@@ -62,7 +68,7 @@ router.post('/login', async (ctx, next) => {
   let res_code = '-1'
   let msg = ''
   if (name && passwd) {
-    user = await userModel.findOne({name: name, password: passwd})
+    user = await userModel.findOne({ name: name, password: md5(md5(passwd) + md5Secret)})
     token = ''
     if (user) {
       // 登录成功
