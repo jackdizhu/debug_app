@@ -87,6 +87,11 @@ header 设置 'Authorization' koa-jwt 读取为 'authorization' (header 不区�
 token 修改为以参数形式发送 不再发送 OPTIONS 请求
 bodyparser koa中间件顺序调整,处理 koaJwt 获取不到post参数问题
 
+# v1.0.1
+
+前端体验优化,新增项目成功清楚表单数据,
+新增项目,项目编辑,项目列表页面样式修改
+
 ## vue 问题
 ```less
 // 引入css 使用别名 路径 ~@

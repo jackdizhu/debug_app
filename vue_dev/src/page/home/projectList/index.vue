@@ -1,18 +1,24 @@
 <template>
   <div>
     <el-container>
-      <el-card class="box-card" v-for="(item, key) in projectList" :key="key">
-        <div slot="header" class="bootclearfix box-card-header" @click.stop="showProjectDetails(item)">
-          <span>{{item.name}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit(item)">编辑</el-button>
-        </div>
-        <div class="text item">
-          {{item.msg}}
-        </div>
-        <div class="text item">
-          {{item.key}}
-        </div>
-      </el-card>
+      <el-header class="el-header-h5" style="height: 32px;line-height: 32px;">
+        项目列表
+      </el-header>
+
+      <el-main class="el-main-con">
+        <el-card class="box-card" v-for="(item, key) in projectList" :key="key">
+          <div slot="header" class="bootclearfix box-card-header" @click.stop="showProjectDetails(item)">
+            <span>{{item.name}}</span>
+            <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit(item)">编辑</el-button>
+          </div>
+          <div class="text item">
+            {{item.msg}}
+          </div>
+          <div class="text item">
+            {{item.key}}
+          </div>
+        </el-card>
+      </el-main>
     </el-container>
   </div>
 </template>
@@ -122,5 +128,6 @@ export default {
 
   .box-card {
     width: 480px;
+    margin-bottom: 20px;
   }
 </style>
