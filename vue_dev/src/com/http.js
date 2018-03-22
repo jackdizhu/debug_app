@@ -1,6 +1,8 @@
 import axios from 'axios'
 import https from 'https'
 import storage from '../com/com.js'
+import router from '../router/index.js'
+import { Message } from 'element-ui'
 
 axios.defaults.timeout = 1000 * 60 * 60
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/mock/5a522f2eb9574d08787bf76a/app1'
@@ -70,13 +72,25 @@ function request (obj) {
       fn = get
     }
     fn(url, params).then(function (res) {
+      // console.log(res, 'request then')
+      let status = (res.response && res.response.status) || 0
       let data = res.data || {}
-      resolve(data)
+      // 处理token验证失效 问题
+      if (data.error === 'Authentication Failed') {
+        Message.error('登录超时,请重新登录.')
+        storage.removeItem('token')
+        router.push({
+          path: '/'
+        })
+        // 返回 错误
+        // reject({ code: status, err: 'requestErr' })
+      } else {
+        resolve(data)
+      }
     }).catch(err => {
-      let status = (err.response && err.response.status) || 0
-      console.log(status, 'request catch err')
-      resolve({ code: status, err: 'requestErr' })
-      // reject(err) // 返回错误
+      // console.log(err, 'request catch')
+      // let status = (err.response && err.response.status) || 0
+      // reject({ code: status, err: 'requestErr' })
     })
   })
 }

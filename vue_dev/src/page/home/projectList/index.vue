@@ -2,9 +2,9 @@
   <div>
     <el-container>
       <el-card class="box-card" v-for="(item, key) in projectList" :key="key">
-        <div slot="header" class="bootclearfix box-card-header" @click="showProjectDetails(item)">
+        <div slot="header" class="bootclearfix box-card-header" @click.stop="showProjectDetails(item)">
           <span>{{item.name}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit">编辑</el-button>
+          <el-button style="float: right; padding: 3px 0" type="text" @click.stop="edit(item)">编辑</el-button>
         </div>
         <div class="text item">
           {{item.msg}}
@@ -66,8 +66,9 @@ export default {
         this.$router.push('/home/projectList/projectDetails')
       }, 0)
     },
-    edit () {
-      console.log('edit')
+    edit (project) {
+      this.actions_checkProject(project)
+      this.$router.push('/home/updateProject')
     }
   },
   // el 和 data 并未初始化

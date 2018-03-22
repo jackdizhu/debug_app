@@ -32,75 +32,6 @@ global.log = _log()
 // error handler
 onerror(app)
 
-/**
- * 错误捕捉中间件
- */
-// app.use(async (ctx, next) => {
-//   try {
-//     ctx.error = (code, message) => {
-//       if (typeof code === 'string') {
-//         message = code
-//         code = 500
-//       }
-//       ctx.throw(code || 500, message || '服务器错误')
-//     }
-//     await next();
-//   } catch (e) {
-//     let status = e.status || 500
-//     let message = e.message || '服务器错误'
-//     ctx.response.body = { status, message }
-
-//   }
-// })
-
-// token 验证 js req header authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlci5uYW1lIiwiaWF0IjoxNTE2Nzg3MDU0LCJleHAiOjE1MTY3OTA2NTR9.gEIBKKqhEQ_slW0BmSK-3pnaXxYFaOSOJonLb3Xc6n0"
-// decodedToken 解密后(数据)key tokenKey 原始(token)key
-
-app.use(koaJwt(
-  {
-    secret,
-    key: 'decodedToken',
-    tokenKey: 'token',
-    getToken: (ctx) => {
-      let _token = (ctx.header.authorization || ctx.query.token || (ctx.request.body && ctx.request.body.token) || ctx.cookies.get('token') || '')
-
-      return _token
-    }
-  }
-).unless({
-  // 数组中的路径不需要通过jwt验证
-  // /^\/file_v[0-9]\/[a-zA-Z]+/,
-  method: ['OPTIONS'],
-  path: [
-    /^\/$/,
-    /^\/favicon.ico$/,
-    /^\/users_v[0-9]\/login/,
-    /^\/users_v[0-9]\/register/,
-    /^\/projectErrorInfo_v[0-9]\/addProjectErrorInfo/
-  ]
-}))
-
-
-// middlewares
-app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text', 'multipart']
-}))
-// 错误处理模块
-// app.use(error())
-app.use(json())
-
-// app.use(async (ctx, next) => {
-//   await next()
-//   // 设置 header
-//   ctx.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8;')
-//   // 设置 服务器支持的 头信息字段
-//   ctx.set("Access-Control-Allow-Headers", "authorization,Content-Type")
-//   // 设置 预检请求的有效期 OPTIONS 20 天
-//   ctx.set("Access-Control-Max-Age", 1728000)
-//   // 设置是否允许发送 cookie
-//   // ctx.set("Access-Control-Allow-Credentials", true)
-// })
-
 // api 服务器 允许跨域
 app.use(cors({
   // Access-Control-Allow-Origin
@@ -129,6 +60,92 @@ app.use(views(path.resolve(__dirname, '/views'), {
   extension: 'ejs'
 }))
 
+/**
+ * 错误捕捉中间件
+ */
+// app.use(async (ctx, next) => {
+//   try {
+//     ctx.error = (code, message) => {
+//       if (typeof code === 'string') {
+//         message = code
+//         code = 500
+//       }
+//       ctx.throw(code || 500, message || '服务器错误')
+//     }
+//     await next();
+//   } catch (e) {
+//     let status = e.status || 500
+//     let message = e.message || '服务器错误'
+//     ctx.response.body = { status, message }
+
+//   }
+// })
+
+// token 验证 js req header authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlci5uYW1lIiwiaWF0IjoxNTE2Nzg3MDU0LCJleHAiOjE1MTY3OTA2NTR9.gEIBKKqhEQ_slW0BmSK-3pnaXxYFaOSOJonLb3Xc6n0"
+// decodedToken 解密后(数据)key tokenKey 原始(token)key
+// 处理 token 验证失败返回
+app.use(function (ctx, next) {
+  return next().catch((err) => {
+    if (err.status === 401) {
+      ctx.body = ctx.body || {}
+      // ctx.status = 200
+      ctx.body.path = ctx.path
+      ctx.body.query = ctx.query
+      ctx.body.body = ctx.request.body
+      ctx.body._req = ctx.request
+      ctx.body._res = ctx.response
+      // ctx.body.error = err.originalError ? err.originalError.message : err.message
+      ctx.body.error = 'Authentication Failed'
+      ctx.body.apiV = '1.0'
+    }
+  })
+})
+app.use(koaJwt(
+  {
+    secret,
+    key: 'decodedToken',
+    tokenKey: 'token',
+    getToken: (ctx) => {
+      let _token = (ctx.header.authorization || ctx.query.token || (ctx.request.body && ctx.request.body.token) || ctx.cookies.get('token') || '')
+
+      return _token
+    }
+  }
+).unless({
+  // 数组中的路径不需要通过jwt验证
+  // /^\/file_v[0-9]\/[a-zA-Z]+/,
+  method: ['OPTIONS'],
+  path: [
+    /^\/$/,
+    /^\/favicon.ico$/,
+    /^\/users_v[0-9]\/login/,
+    /^\/users_v[0-9]\/register/,
+    /^\/projectErrorInfo_v[0-9]\/addProjectErrorInfo/
+  ]
+}))
+
+// middlewares
+app.use(bodyparser({
+  enableTypes: ['json', 'form', 'text', 'multipart']
+}))
+
+// 错误处理模块
+// app.use(error())
+app.use(json())
+
+// app.use(async (ctx, next) => {
+//   await next()
+//   // 设置 header
+//   ctx.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8;')
+//   // 设置 服务器支持的 头信息字段
+//   ctx.set("Access-Control-Allow-Headers", "authorization,Content-Type")
+//   // 设置 预检请求的有效期 OPTIONS 20 天
+//   ctx.set("Access-Control-Max-Age", 1728000)
+//   // 设置是否允许发送 cookie
+//   // ctx.set("Access-Control-Allow-Credentials", true)
+// })
+
+
 // logger
 // app.use(async (ctx, next) => {
 //   const start = new Date()
@@ -138,6 +155,20 @@ app.use(views(path.resolve(__dirname, '/views'), {
 // })
 
 // routes
+
+// 针对 401 token 验证失败 没有返回问题
+// app.use(async (ctx, next) => {
+//   await next()
+//   // 处理 !==200 错误
+//   if (ctx.response.status !== 401) {
+//     ctx.body = {
+//       obj: {
+//         res_code: '-9',
+//         msg: 'Authentication Failed'
+//       }
+//     }
+//   }
+// })
 
 // 针对 /api 的中间件
 app.use(async (ctx, next) => {
@@ -177,7 +208,6 @@ app.use(api.routes(), api.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   log({ err, ctx }, 'error')
-  console.log(err)
 
   ctx.body = err
 })

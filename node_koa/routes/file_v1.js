@@ -46,7 +46,10 @@ router.post('/upload', upload.single('file'), async (ctx, next) => {
   file = await fileModel.insert({
     name: originalname,
     nowName: filename,
-    size: size
+    size: size,
+    date: (() => {
+      return new Date().getTime()
+    })()
   })
 
   ctx.body = {

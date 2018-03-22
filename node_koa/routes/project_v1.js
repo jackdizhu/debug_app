@@ -84,21 +84,56 @@ router.get('/find', async (ctx, next) => {
     project: project
   }
 })
+// 查找记录
+router.get('/projectFindOne', async (ctx, next) => {
+  let _get = ctx.request.query || {}
+  let { _id } = _get
+  let res_code = '0'
+  let resMsg = ''
+  let project = null
+
+  if (_id) {
+    project = await projectModel.findOne({ _id: _id })
+
+    if (project) {
+      res_code = '0'
+      resMsg = ''
+    } else {
+      res_code = '-1'
+      resMsg = '查询数据失败'
+    }
+  } else {
+    res_code = '-2'
+    resMsg = '填写信息不完整.'
+  }
+
+  ctx.body = {
+    title: 'projectFindOne',
+    res_code: res_code,
+    msg: resMsg,
+    project: project
+  }
+})
 // 修改记录
-router.post('/edit', async (ctx, next) => {
+router.post('/projectUpdate', async (ctx, next) => {
   let _post = ctx.request.body || {}
   let { name, msg, mapFile, mapFileUrl, _id } = _post
+  let res_code = '0'
+  let resMsg = ''
+  let project = null
 
   let _project = await projectModel.findOne({ _id: _id})
   _project._id = _project._id.toString()
-  _project.msg = msg
-  _project.mapFile = mapFile
-  _project.mapFileUrl = mapFileUrl
+  _project.msg = msg || _project.msg
+  _project.mapFile = mapFile || _project.mapFile
+  _project.mapFileUrl = mapFileUrl || _project.mapFileUrl
   // let R =
   await projectModel.update(_project)
-  let project = await projectModel.findOne({name: 'jackdizhu'})
+  project = await projectModel.findOne({ _id: _id })
   ctx.body = {
-    title: 'edit',
+    title: 'projectUpdate',
+    res_code: res_code,
+    msg: resMsg,
     project: project
   }
 })

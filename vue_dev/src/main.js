@@ -19,8 +19,8 @@ import '@/less/com.less'
 // import config from './com/config.js'
 
 // 添加错误捕获
-import browserDebug from './com/browserDebug/index.js'
-browserDebug({}, window)
+// import browserDebug from './com/browserDebug/index.js'
+// browserDebug({}, window)
 
 // 使用 路由
 Vue.use(Router)

@@ -117,13 +117,14 @@ router.get('/projectErrorInfoList', async (ctx, next) => {
   let resMsg = ''
   let projectErrorInfoList = null
   if (_id && minDate && maxDate) {
+    // 按时间降序排序 最新的信息 排前面
     projectErrorInfoList = await projectErrorInfoModel.find({
       projectId: _id,
       date:{
         '$gt': new Date(minDate).getTime(),
         '$lt': new Date(maxDate).getTime()
       }
-    })
+    }).sort({ date: -1 })
     if (projectErrorInfoList) {
       res_code = '0'
     } else {

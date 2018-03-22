@@ -5,6 +5,7 @@ import Page from '@/page/index'
 import Home from '@/page/home'
 import Err from '@/page/home/error'
 import AddProject from '@/page/home/addProject'
+import UpdateProject from '@/page/home/updateProject'
 import ProjectList from '@/page/home/projectList'
 import ProjectDetails from '@/page/home/projectList/projectDetails'
 
@@ -36,6 +37,11 @@ export default new Router({
           path: '/home/addProject',
           name: 'addProject',
           component: AddProject
+        },
+        {
+          path: '/home/updateProject',
+          name: 'updateProject',
+          component: UpdateProject
         },
         {
           path: '/home/projectList',
