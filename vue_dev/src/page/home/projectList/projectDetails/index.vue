@@ -1,23 +1,33 @@
 <template>
   <div>
     <div class="block">
-      <span class="demonstration">周</span>
+      <span class="demonstration">月</span>
       <el-date-picker
-        v-model="week"
-        type="week"
-        format="yyyy 第 WW 周"
-        :picker-options="pickerOptions"
-        placeholder="选择周">
+        v-model="dataM"
+        type="month"
+        @change="monthChange"
+        placeholder="选择月">
       </el-date-picker>
     </div>
+    <div class="vie-Chart" v-if="isgetInitData">
+      <v-schart :canvasId="canvasId"
+        :type="type"
+        :width="width"
+        :height="height"
+        :data="data"
+        :options="options"
+      >
+      </v-schart>
+    </div>
     <el-collapse @change="handleChange">
-      <el-collapse-item :title="item.name + ' ------- ' + item.date" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
+      <el-collapse-item class="item-box" :title="item.name + ' ------- ' + item.date" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
         <div>
+          <p class="tit">初步错误信息</p>
           <p>filename: {{item.filename}}</p>
           <p>line: {{item.line}}</p>
           <p>column: {{item.column}}</p>
-          <p>## 详细信息</p>
-          <div v-if="item.ext">
+          <div v-if="item.ext" class="detailed-information">
+            <p class="tit">详细错误信息</p>
             <p>filename: {{item.ext.source}}</p>
             <p>line: {{item.ext.line}}</p>
             <p>column: {{item.ext.column}}</p>
@@ -32,6 +42,7 @@
 </template>
 
 <script>
+import VSchart from 'vue-schart'
 import { mapState, mapGetters } from 'vuex'
 // import {
 //   Layout,
@@ -53,21 +64,67 @@ export default {
   name: 'index',
   data () {
     return {
-      minDate: this.$moment().isoWeekday(1).format('YYYY-MM-DD'),
-      maxDate: this.$moment().isoWeekday(7).format('YYYY-MM-DD'),
+      // 查询数据 是否完成
+      isgetInitData: false,
+      minDate: this.$moment().startOf('month').format('YYYY-MM-DD'),
+      maxDate: this.$moment().endOf('month').format('YYYY-MM-DD'),
 
       projectErrorInfoList: [],
       pickerOptions: {
         firstDayOfWeek: 1
       },
-      week: '',
-      activeNames: ['1']
+      dataM: this.$moment(),
+      activeNames: ['1'],
+      // 图表
+      canvasId: 'myCanvas',
+      type: 'line',
+      width: 982,
+      height: 200,
+      data: [
+        // {
+        //   name: '2014',
+        //   value: 0
+        // },
+        // {
+        //   name: '2015',
+        //   value: 2
+        // },
+        // {
+        //   name: '2016',
+        //   value: 3
+        // },
+        // {
+        //   name: '2017',
+        //   value: 0
+        // }
+      ],
+      options: {
+        // canvas 内边距
+        padding: 50,
+        // 默认背景颜色
+        bgColor: '#FFFFFF',
+        // 图表标题
+        title: '当月错误信息 条目图表',
+        // 图表标题颜色
+        titleColor: '#000000',
+        // 图表标题位置: top / bottom
+        titlePosition: 'top',
+        // y轴分成5等分
+        yEqual: 5,
+        // 默认填充颜色
+        fillColor: '#1E9FFF',
+        // 内容横线颜色
+        contentColor: '#eeeeee',
+        // 坐标轴颜色
+        axisColor: '#666666'
+      }
     }
   },
   // 父组件数据
   props: [],
   // 组件
   components: {
+    VSchart
   },
   // 计算
   computed: {
@@ -81,6 +138,58 @@ export default {
   watch: {},
   // 事件方法
   methods: {
+    initChartData () {
+      let dayn = Number(this.$moment(this.maxDate).endOf('month').format('DD'))
+      let _arr = []
+      for (let i = 0; i < dayn; i++) {
+        _arr[i] = {
+          name: i + 1,
+          value: 0
+        }
+      }
+      this.data = _arr
+      console.log(this.data)
+    },
+    getInitData () {
+      // 开始查询数据
+      this.isgetInitData = false
+
+      this.initChartData()
+      this.$request({
+        url: this.$api.projectErrorInfoList,
+        type: 'GET',
+        params: {
+          _id: this.getCheckProjectId,
+          minDate: this.minDate,
+          maxDate: this.maxDate
+        }
+      }).then(res => {
+        if (res.res_code === '0') {
+          this.projectErrorInfoList = res.projectErrorInfoList
+          for (let i = 0; i < this.projectErrorInfoList.length; i++) {
+            console.log(typeof this.projectErrorInfoList[i].date)
+            let _d = this.$moment(this.projectErrorInfoList[i].date)
+            let _dateTime = _d.format('YYYY-MM-DD HH:mm:ss')
+            let _date = Number(_d.format('DD'))
+            this.projectErrorInfoList[i].date = _dateTime
+            // 统计
+            this.data[_date - 1].value += 1
+            console.log(this.data)
+            // 查询完 显示数据
+            this.isgetInitData = true
+          }
+          console.log(res, 'this.$api.mock')
+        } else {
+          this.$message.error('查询项目详情失败.')
+        }
+      })
+    },
+    // 月份切换
+    monthChange (val) {
+      this.minDate = this.$moment(val).startOf('month').format('YYYY-MM-DD')
+      this.maxDate = this.$moment(val).endOf('month').format('YYYY-MM-DD')
+      this.getInitData()
+    },
     handleChange (val) {
       console.log(val)
     }
@@ -92,26 +201,7 @@ export default {
   },
   // 完成了 data 数据的初始化，el没有
   created () {
-    this.$request({
-      url: this.$api.projectErrorInfoList,
-      type: 'GET',
-      params: {
-        _id: this.getCheckProjectId,
-        minDate: this.minDate,
-        maxDate: this.maxDate
-      }
-    }).then(res => {
-      if (res.res_code === '0') {
-        this.projectErrorInfoList = res.projectErrorInfoList
-        for (let i = 0; i < this.projectErrorInfoList.length; i++) {
-          console.log(typeof this.projectErrorInfoList[i].date)
-          this.projectErrorInfoList[i].date = this.$moment(this.projectErrorInfoList[i].date).format('YYYY-MM-DD HH:mm:ss')
-        }
-        console.log(res, 'this.$api.mock')
-      } else {
-        this.$message.error('查询项目详情失败.')
-      }
-    })
+    this.getInitData()
     console.log('created ------------------ 完成了 data 数据的初始化，el没有')
   },
   // 完成了 el 和 data 初始化
@@ -154,5 +244,10 @@ export default {
 
   .box-card {
     width: 480px;
+  }
+  .item-box {
+    .tit {
+      color: #a6d734;
+    }
   }
 </style>
