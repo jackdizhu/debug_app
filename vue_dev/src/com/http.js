@@ -5,9 +5,6 @@ import storage from '../com/com.js'
 axios.defaults.timeout = 1000 * 60 * 60
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/mock/5a522f2eb9574d08787bf76a/app1'
 axios.defaults.baseURL = 'http://127.0.0.1:3000'
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-// token 验证
-axios.defaults.headers['authorization'] = storage.getItem('token') || ''
 // axios.defaults.withCredentials = true // 带cookie 请求
 axios.defaults.httpsAgent = new https.Agent({
   rejectUnauthorized: false
@@ -43,11 +40,7 @@ function get (url, params = {}) {
  */
 function post (url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios.post(url, qs.stringify(data), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      }
-    }).then(res => {
+    axios.post(url, qs.stringify(data)).then(res => {
       resolve(res)
     }, err => {
       reject(err)
@@ -63,10 +56,15 @@ function post (url, data = {}) {
  * @returns {Promise}
  */
 function request (obj) {
+  let token = storage.getItem('token') || ''
+  axios.defaults.headers['authorization'] = token
+  // axios.defaults.headers['Access-Control-Request-Method'] = 'GET,HEAD,PUT,POST,DELETE'
+
   let { url, params, type } = obj
   return new Promise((resolve, reject) => {
     let fn = null
     if (type === 'POST') {
+      axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       fn = post
     } else {
       fn = get

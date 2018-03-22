@@ -1,5 +1,4 @@
-import browserDebug from './com/browserDebug/index.js'
-browserDebug({}, window)
+
 import Vue from 'vue'
 import App from './App'
 import Router from 'vue-router'
@@ -18,6 +17,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/them/index.less'
 import '@/less/com.less'
 // import config from './com/config.js'
+
+// 添加错误捕获
+import browserDebug from './com/browserDebug/index.js'
+browserDebug({}, window)
 
 // 使用 路由
 Vue.use(Router)

@@ -9,7 +9,9 @@ router.prefix('/projectErrorInfo_v1')
 // 添加记录
 router.get('/addProjectErrorInfo', async (ctx, next) => {
   let _get = ctx.request.query || {}
-  let { msg, key, filename, line, column } = _get
+  let { msg, key, filename, line, column, data } = _get
+  log(data)
+
   // var err_msg = [{
   //   "msg": "ReferenceError: d is not defined @ Object.3../alloy-lever.js (http://127.0.0.1/AlloyLever/public/dist/js/build.js:321:9) @ s (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:265) @ e (http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:436) @ http://127.0.0.1/AlloyLever/public/dist/js/build.js:1:465",
   //   "filename": "http://127.0.0.1/AlloyLever/public/dist/js/build.js",

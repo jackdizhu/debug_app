@@ -1,8 +1,9 @@
+import { request } from '../http.js'
 export default (_config, window) => {
 
     var console = window.console = window.console || {}
 
-    let key = ''
+    let key = '7433dcd97077d2502cf0e3051001bc3b'
     // 采集浏览器指纹
     var _Fingerprint2 = {}
     var Fingerprint2 = require('fingerprintjs2')
@@ -14,14 +15,60 @@ export default (_config, window) => {
       console.log(_Fingerprint2)
     })
 
+    // process.on('uncaughtException', function(e){
+    //     console.error('UE:Catch in process', e)
+    // })
+    // process.on('unhandledRejection', (reason) => {
+    //     console.info('UR:Catch in process', reason)
+    // })
+    // process.on('rejectionHandled', (p) => {
+    //     console.info('RH:Catch in process', p)
+    // })
+
+    const msg1Format = function (msg1) {
+      // VueComponent.getJson (webpack-internal:///./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/page/home/error/index.vue:56:19)↵
+      let _arr = msg1.split(' ')
+      let _msg1Obj = {}
+      _msg1Obj.name = _arr[0]
+      _msg1Obj.filename = _arr[1]
+      // _msg1Obj._m = _arr.filename.match(/\:([0-9]+)\:([0-9]+)\)[↵]$/)
+      return _msg1Obj
+
+      //   'line': error.line,
+      //   'column': error.column,
+    }
+    const postMsgFormat = (msg) => {
+      let _m = {}
+      _m.msg = msg
+      // let _m = 'ReferenceError: a is not defined↵    at VueComponent.getJson (webpack-internal:///./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/page/home/error/index.vue:56:19)↵    at VueComponent.created (webpack-internal:///./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/page/home/error/index.vue:67:10)↵    at callHook (webpack-internal:///./node_modules/vue/dist/vue.esm.js:2922:21)↵    at VueComponent.Vue._init (webpack-internal:///./node_modules/vue/dist/vue.esm.js:4625:5)↵    at new VueComponent (webpack-internal:///./node_modules/vue/dist/vue.esm.js:4793:12)↵    at createComponentInstanceForVnode (webpack-internal:///./node_modules/vue/dist/vue.esm.js:4294:10)↵    at init (webpack-internal:///./node_modules/vue/dist/vue.esm.js:4115:45)↵    at createComponent (webpack-internal:///./node_modules/vue/dist/vue.esm.js:5601:9)↵    at createElm (webpack-internal:///./node_modules/vue/dist/vue.esm.js:5548:9)↵    at createChildren (webpack-internal:///./node_modules/vue/dist/vue.esm.js:5675:9)'
+      // ↵    at
+      let _arr = msg.split('    at ')
+      _m.name = _arr[0]
+      _m.msg1 = _arr[1]
+
+      if (_m.msg1) {
+        _m.msg1Obj = msg1Format(_m.msg1)
+        console.log()
+      }
+    }
+
     const postMsg = (msg) => {
+      postMsgFormat(msg)
       let data = {
         errMsg: msg,
         _Fingerprint2: _Fingerprint2,
         key: key
       }
-      let src = console.config.serverUrl + '?data=' + JSON.stringify(data)
-      new Image().src = src
+      // console.log(data)
+      // let src = console.config.serverUrl + '?data=' + JSON.stringify(data) + '&key=' + key
+      let src = console.config.serverUrl
+      request({
+        url: src,
+        type: 'GET',
+        params: data
+      }).then(res => {
+      })
+      // new Image().src = src
     }
     console.readConfig = function (config) {
       var index, level;
@@ -99,7 +146,7 @@ export default (_config, window) => {
               argumentsArray[i] = argumentsArray[i].stack
             }
           }
-          data = { level: level, message: argumentsArray.join(", ") };
+          data = { level: level, message: argumentsArray.join(', ') };
           while (!console.stackTrace && index < argumentsArray.length) {
             console.addStackTrace(data, arguments[index]);
             ++index;
@@ -145,12 +192,18 @@ export default (_config, window) => {
         if (window.onerror && window.onerror !== console.onError) {
           console.log("window.onerror will be overriden; you can prevent this by setting 'logJavaScriptErrors' to false");
         }
-        console.onError = window.onerror = function (message, fileName, lineNumber, columnNumber, error) {
+        console.onError = window.onerror = function (message, fileName, line, column, error) {
+          // let _msg = {
+          //   'filename': error.filename,
+          //   'line': error.line,
+          //   'column': error.column,
+          //   'stack': error.stack
+          // }
           console.send(console.addStackTrace({
             level: console.config.levelForJavaScriptErrors,
-            message: "[" + fileName + ":" + lineNumber + (columnNumber ? ":" + columnNumber : "") + "] " + message
-          }, error));
-        };
+            message: error.stack
+          }, error))
+        }
       } else {
         if (window.onerror && window.onerror === console.onError) {
           window.onerror = null;
@@ -207,12 +260,18 @@ export default (_config, window) => {
       // levels: ["info", "warn", "error"],
       levelEnabledOnServer: 'error',
       // levelForConsoleLog: 'info',
-      serverUrl: '/logs'
+      serverUrl: 'http://127.0.0.1:3000/projectErrorInfo_v1/addProjectErrorInfo'
     })
 
     var uncaught = require('uncaught')
     uncaught.start()
     uncaught.addListener(function (error) {
+      // let _msg = {
+      //   'filename': error.filename,
+      //   'line': error.line,
+      //   'column': error.column,
+      //   'stack': error.stack
+      // }
       postMsg(error.stack)
     })
 }
