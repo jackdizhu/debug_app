@@ -3,18 +3,7 @@ import Vue from 'vue'
 // export const USER_SIGNIN = 'user_signin' //登录成功 指向 方法
 // export const USER_SIGNOUT = 'user_signout' //退出登录 指向 方法
 // const _storage = sessionStorage
-const _storage = localStorage
-const storage = {
-  getItem: (item) => {
-    return _storage.getItem(item)
-  },
-  setItem: (item, str) => {
-    return _storage.setItem(item, str)
-  },
-  removeItem: (item) => {
-    return _storage.removeItem(item)
-  }
-}
+import storage from '../com/com.js'
 
 export default {
 

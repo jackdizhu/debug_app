@@ -6,5 +6,6 @@ export default {
   projectList: `/project_v1/projectList`,
   addProject: `/project_v1/addProject`,
   register: `/users_v1/register`,
-  login: `/users_v1/login`
+  login: `/users_v1/login`,
+  json: `/users_v1/json`
 }

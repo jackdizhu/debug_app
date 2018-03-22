@@ -1,5 +1,5 @@
 const _storage = localStorage
-const storage = {
+export default {
   getItem: (item) => {
     return _storage.getItem(item)
   },
@@ -10,4 +10,3 @@ const storage = {
     return _storage.removeItem(item)
   }
 }
-exports =  storage
