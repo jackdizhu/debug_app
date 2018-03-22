@@ -1,43 +1,54 @@
 <template>
   <div>
-    <div class="block">
-      <span class="demonstration">月</span>
-      <el-date-picker
-        v-model="dataM"
-        type="month"
-        @change="monthChange"
-        placeholder="选择月">
-      </el-date-picker>
-    </div>
-    <div class="vie-Chart" v-if="isgetInitData">
-      <v-schart :canvasId="canvasId"
-        :type="type"
-        :width="width"
-        :height="height"
-        :data="data"
-        :options="options"
-      >
-      </v-schart>
-    </div>
-    <el-collapse @change="handleChange">
-      <el-collapse-item class="item-box" :title="item.name + ' ------- ' + item.date" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
-        <div>
-          <p class="tit">初步错误信息</p>
-          <p>filename: {{item.filename}}</p>
-          <p>line: {{item.line}}</p>
-          <p>column: {{item.column}}</p>
-          <div v-if="item.ext" class="detailed-information">
-            <p class="tit">详细错误信息</p>
-            <p>filename: {{item.ext.source}}</p>
-            <p>line: {{item.ext.line}}</p>
-            <p>column: {{item.ext.column}}</p>
-            <!-- 暂时不显示 代码片段 -->
-            <!-- <p>code: </p>
-            <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea> -->
+    <el-container>
+      <el-header class="el-header-h5" style="height: 32px;line-height: 32px;">
+        项目错误信息
+      </el-header>
+
+      <el-main class="el-main-con">
+        <el-card class="box-card">
+          <div class="block">
+            <span class="demonstration">选择月份</span>
+            <el-date-picker
+              v-model="dataM"
+              type="month"
+              @change="monthChange"
+              placeholder="选择月">
+            </el-date-picker>
           </div>
-        </div>
-      </el-collapse-item>
-    </el-collapse>
+          <!-- 图表 -->
+          <div class="vie-Chart" v-if="isgetInitData">
+            <v-schart :canvasId="canvasId"
+              :type="type"
+              :width="width"
+              :height="height"
+              :data="data"
+              :options="options"
+            >
+            </v-schart>
+          </div>
+          <el-collapse @change="handleChange">
+            <el-collapse-item class="item-box" :title="item.name + ' ------- ' + item.date" :name="key" v-for="(item, key) in projectErrorInfoList" :key="key">
+              <div>
+                <p class="tit">初步错误信息</p>
+                <p>filename: {{item.filename}}</p>
+                <p>line: {{item.line}}</p>
+                <p>column: {{item.column}}</p>
+                <div v-if="item.ext" class="detailed-information">
+                  <p class="tit">详细错误信息</p>
+                  <p>filename: {{item.ext.source}}</p>
+                  <p>line: {{item.ext.line}}</p>
+                  <p>column: {{item.ext.column}}</p>
+                  <!-- 暂时不显示 代码片段 -->
+                  <!-- <p>code: </p>
+                  <textarea name="" id="" cols="30" rows="10" readonly>{{item.ext.code}}</textarea> -->
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+        </el-card>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -78,7 +89,7 @@ export default {
       // 图表
       canvasId: 'myCanvas',
       type: 'line',
-      width: 982,
+      width: 900,
       height: 200,
       data: [
         // {
@@ -148,7 +159,6 @@ export default {
         }
       }
       this.data = _arr
-      console.log(this.data)
     },
     getInitData () {
       // 开始查询数据
@@ -167,14 +177,12 @@ export default {
         if (res.res_code === '0') {
           this.projectErrorInfoList = res.projectErrorInfoList
           for (let i = 0; i < this.projectErrorInfoList.length; i++) {
-            console.log(typeof this.projectErrorInfoList[i].date)
             let _d = this.$moment(this.projectErrorInfoList[i].date)
             let _dateTime = _d.format('YYYY-MM-DD HH:mm:ss')
             let _date = Number(_d.format('DD'))
             this.projectErrorInfoList[i].date = _dateTime
             // 统计
             this.data[_date - 1].value += 1
-            console.log(this.data)
             // 查询完 显示数据
             this.isgetInitData = true
           }
@@ -191,7 +199,7 @@ export default {
       this.getInitData()
     },
     handleChange (val) {
-      console.log(val)
+      // console.log(val)
     }
   },
   // el 和 data 并未初始化
@@ -243,7 +251,7 @@ export default {
   }
 
   .box-card {
-    width: 480px;
+    width: 100%;
   }
   .item-box {
     .tit {
